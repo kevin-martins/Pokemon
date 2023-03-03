@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { capitalize } from '../helpers/helpers'
 import Redirection from './shared/Redirection'
 
