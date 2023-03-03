@@ -13,6 +13,7 @@ type SpritesProps = {
 export type NewPokemonEvolutionProps = {
     level: number,
     to: string,
+    current: boolean,
 }
 
 export type NewPokemonSpeciesProps = {
@@ -28,7 +29,7 @@ export type NewPokemonDataProps = {
     name: string,
     names: NamesProps[],
     discovered: boolean,
-    current_level: 1,
+    current_level: number,
     current_xp: number,
     to_next_level: number,
     capture_rate: number,
@@ -41,8 +42,18 @@ export type NewPokemonDataProps = {
     types: TypesProps[],
 }
 
-export type PokemonTeam = {
+export type PokemonTeamProps = {
     id: number,
     name: string,
-
+    current_level: number,
+    current_xp: number,
+    to_next_level: number,
+    capture_rate: number,
+    evolutions: NewPokemonEvolutionProps[],
+    is_legendary: boolean,
+    is_mythical: boolean,
+    moves: MovesProps[],
+    sprites: SpritesProps,
+    stats: StatsProps[],
+    types: TypesProps[],
 }
