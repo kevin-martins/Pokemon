@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import { capitalize, getActionMessage } from '../../helpers/helpers'
-import { NewPokemonDataProps, TeamChangeState } from '../../models/pokemon'
+import { AlertState } from '../../models/alert'
+import { NewPokemonDataProps } from '../../models/pokemon'
 import '../../styles/alert.css'
 
 const Alert = () => {
@@ -13,7 +14,7 @@ const Alert = () => {
   }
 
   useEffect(() => {
-    if (teamChanges.action !== TeamChangeState.None) {
+    if (teamChanges.action !== AlertState.None) {
       setDisplay(true)
     }
   }, [teamChanges])
