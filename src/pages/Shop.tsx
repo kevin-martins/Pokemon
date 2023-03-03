@@ -7,10 +7,10 @@ const Shop = () => {
   const shop = useAppSelector(state => state.pokemon.shop)
   return (
     <div className='flex flex-row flex-wrap gap-4'>
-      {shop.map(item => {
+      {shop.map((item, i: number) => {
         const itemType: string = item.item.type === ItemUtilisation.Pokeball ? 'pokeballs' : 'foods'
         return (
-          <div className='flex flex-col'>
+          <div key={i + Date.now()} className='flex flex-col'>
             {/* <p>{getFile(`/assets/shop/${itemType}/${getPokeballFilename(item.item.name)}`)}</p> */}
             <p>{item.item.name}</p>
             <img
