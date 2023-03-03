@@ -10,6 +10,10 @@ export const checkPokemonOccurences = (pokedex: { id: number }[], pokemonId: num
     return pokedex.every(pokemon => pokemonId !== pokemon.id)
 }
 
+export const getRandomValue = (max: number) => {
+    return Math.floor(Math.random() * max);
+}
+
 export const getEvolutionChainRecursively = (evolves_to: EvolvesToProps[] | [], evolutions: NewPokemonEvolutionProps[]) => {
     evolves_to.forEach((e: EvolvesToProps) => {
         evolutions.push({
@@ -44,12 +48,12 @@ export const getPokemonByName = (name: string, pokemons: NewPokemonDataProps[]):
     return pokemons[pokemons.findIndex((pkm: NewPokemonDataProps) => pkm.name === name)]
 }
 
-export const getPokemonDataLocationByName = (pokemons: NewPokemonDataProps[], name: string): number => {
+export const getPokemonIndexByName = (pokemons: NewPokemonDataProps[], name: string): number => {
     return pokemons.findIndex((pkm: NewPokemonDataProps) => pkm.name === name)
 }
 
 export const getNextPokemonEvolutionName = (pokemon: NewPokemonDataProps): string => {
     const evolutionNames = [pokemon.name, ...pokemon.evolutions.map((pkm: NewPokemonEvolutionProps) => pkm.to)]
     const currentFormIndex = evolutionNames.findIndex(pkm => pkm.includes(pokemon.name))
-    return evolutionNames[currentFormIndex + (currentFormIndex === evolutionNames.length - 1 ? 0 : 1)]
+    return evolutionNames[currentFormIndex + (currentFormIndex === (evolutionNames.length - 1) ? 0 : 1)]
 }

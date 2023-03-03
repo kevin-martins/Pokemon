@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { shop } from '../api/shop';
-import { checkPokemonOccurences, getEvolutionChainRecursively, getNextPokemonEvolutionName, getPokemonDataLocationByName } from '../helpers/helpers'
+import { checkPokemonOccurences, getEvolutionChainRecursively, getNextPokemonEvolutionName, getPokemonIndexByName, getRandomValue } from '../helpers/helpers'
 import { AlertProps, AlertState } from '../models/alert';
 import { LoadingState } from '../models/loading';
 import { NewPokemonDataProps } from '../models/pokemon'
@@ -17,6 +17,7 @@ export interface PokemonState {
     pokedex: NewPokemonDataProps[],
     team: NewPokemonDataProps[],
     teamChanges: AlertProps,
+    computerTeam: NewPokemonDataProps[],
     shop: ShopProps[],
     evolutionList: [],
     berries: number,
@@ -28,6 +29,7 @@ const initialState: PokemonState = {
     pokedex: [],
     team : [],
     teamChanges: teamChange,
+    computerTeam: [],
     shop: shop,
     evolutionList: [],
     berries: 10,
@@ -76,27 +78,41 @@ const apiSlice = createSlice({
             if (checkPokemonOccurences(state.pokedex, action.payload.id))
                 state.pokedex.push(action.payload)
         },
+        createComputerTeam(state) {
+            state.computerTeam = []
+            console.log(state.pokedex.length)
+            for (let i = 0; i < 7; i++) {
+                const randomValue = getRandomValue(state.pokedex.length - 1)
+                state.computerTeam.push(state.pokedex[randomValue])
+            }
+        },
         addToTeam(state, action: PayloadAction<NewPokemonDataProps>) {
-            if (checkPokemonOccurences(state.team, action.payload.id)) {
-                state.team.push(action.payload)
-                state.teamChanges = {
-                    action: AlertState.Add,
-                    pokemonChange: [action.payload],
+            if (state.team.length < 7) {
+                if (checkPokemonOccurences(state.team, action.payload.id)) {
+                    state.team.push(action.payload)
+                    state.teamChanges = {
+                        action: AlertState.Add,
+                        pokemonChange: [action.payload],
+                    }
+                } else {
+                    state.teamChanges = {
+                        action: AlertState.AlreadyIn,
+                        pokemonChange: [action.payload],
+                    }
                 }
             } else {
                 state.teamChanges = {
-                    action: AlertState.AlreadyIn,
+                    action: AlertState.Full,
                     pokemonChange: [action.payload],
                 }
             }
         },
         evolvesPokemon(state, action: PayloadAction<NewPokemonDataProps>) {
-            // console.log(state.team.findIndex((pkm: NewPokemonDataProps) => pkm.id === action.payload.id))
             const nextEvolutionName = getNextPokemonEvolutionName(action.payload)
+            console.log(nextEvolutionName)
             if (action.payload.name !== nextEvolutionName) {
-                const currentPokemonFormIndex = getPokemonDataLocationByName(state.pokedex, action.payload.name)
-                const nextPokemonFormIndex = getPokemonDataLocationByName(state.pokedex, nextEvolutionName)
-                console.log(action.payload.id, currentPokemonFormIndex, currentPokemonFormIndex)
+                const currentPokemonFormIndex = getPokemonIndexByName(state.pokedex, action.payload.name)
+                const nextPokemonFormIndex = getPokemonIndexByName(state.pokedex, nextEvolutionName)
                 state.pokedex[currentPokemonFormIndex] = {
                     ...action.payload,
                     evolutions: action.payload.evolutions.map(pkm => {
@@ -107,15 +123,16 @@ const apiSlice = createSlice({
                     }),
                 }
                 state.pokedex[nextPokemonFormIndex] = {
-                    ...action.payload,
+                    ...state.pokedex[nextPokemonFormIndex],
                     discovered: true,
-                    evolutions: action.payload.evolutions.map(pkm => {
+                    evolutions: state.pokedex[nextPokemonFormIndex].evolutions.map(pkm => {
                         return {
                             ...pkm,
                             current: nextEvolutionName.includes(pkm.to) ? true : false,
                         }
                     }),
                 }
+                
             }
         },
         removeToTeam(state, action: PayloadAction<number>) {
@@ -150,6 +167,7 @@ const apiSlice = createSlice({
 
 export const {
     addToPokedex,
+    createComputerTeam,
     addToTeam,
     removeToTeam,
     evolvesPokemon,
