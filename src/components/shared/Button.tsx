@@ -1,18 +1,19 @@
 type Props = {
-    type: 'button' | 'submit' | 'reset',
-    text: string,
-    className?: string,
-    handleClick: Function,
+  type?: 'button' | 'submit' | 'reset',
+  children: JSX.Element | string,
+  className?: string,
+  addClassName?: string,
+  handleClick: Function,
 }
 
-const Button = ({ type = 'button', text, className = "", handleClick }: Props) => {
+const Button = ({ type = 'button', children, className = "px-3 py-2 bg-white mx-auto hover:bg-gray-400", addClassName = "", handleClick }: Props) => {
   return (
     <button
       type={type}
-      className={`px-3 py-2 bg-white hover:bg-gray-400 ${className}`}
+      className={`${className} ${addClassName}`}
       onClick={() => handleClick()}
     >
-      {text}
+      {typeof children === "string" ? children : {...children}}
     </button>
   )
 }
