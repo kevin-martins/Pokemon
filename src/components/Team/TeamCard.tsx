@@ -53,64 +53,66 @@ const TeamCard = ({ pokemon, state }: Props) => {
   }, [pokemon.current_level])
 
   return (
-    <div
-      className='relative flex flex-col gap-3'
-      onMouseEnter={handlerHoverState}
-      onMouseLeave={handlerHoverState}
-    >
-      <Button
-        className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
-          ${state === TeamState.Remove && 'hover:border-red-600'}
-          ${state === TeamState.Evolve && 'hover:border-green-600'}
-        `}
-        onClick={handleTeamStates}
+    <div className='flex flex-col'>
+      <div
+        className='relative gap-3'
+        onMouseEnter={handlerHoverState}
+        onMouseLeave={handlerHoverState}
       >
-        <div
-          className={`relative w-full h-full ${(state === TeamState.Remove && !isLastForm) && 'hover:grayscale'}`}
+        <Button
+          className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
+            ${state === TeamState.Remove && 'hover:border-red-600'}
+            ${state === TeamState.Evolve && 'hover:border-green-600'}
+          `}
+          onClick={handleTeamStates}
         >
-          <EvolutionNames
-            state={state}
-            hover={hover}
-            missingLevelToEvolve={missingLevelToEvolve}
-            nextPokemonName={nextPokemonForm.to}
-            pokemon={pokemon}
-          />
-          <div className='w-full h-full flex justify-center '>
-            <EvolutionImages
+          <div
+            className={`relative w-full h-full ${(state === TeamState.Remove && !isLastForm) && 'hover:grayscale'}`}
+          >
+            <EvolutionNames
               state={state}
               hover={hover}
               missingLevelToEvolve={missingLevelToEvolve}
-              isLastForm={isLastForm}
-              nextPokemonFormSprite={nextPokemonForm.sprite}
+              nextPokemonName={nextPokemonForm.to}
               pokemon={pokemon}
             />
-          </div>
+            <div className='w-full h-full flex justify-center '>
+              <EvolutionImages
+                state={state}
+                hover={hover}
+                missingLevelToEvolve={missingLevelToEvolve}
+                isLastForm={isLastForm}
+                nextPokemonFormSprite={nextPokemonForm.sprite}
+                pokemon={pokemon}
+              />
+            </div>
 
-          {/* Block user to prompt evolution if level not reached */}
-        </div>
-      </Button>
-        {(state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm)) &&
-          <div className='absolute top-0 w-60 bg-gray-900/70 h-full rounded-lg'>
-            <Center>
-              <div className='flex flex-col h-content w-44 gap-5'>
-                <p
-                  className='text-center text-white'
-                >
-                  {
-                    isLastForm
-                      ? 'already at is maximum evolution form'
-                      : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
-                  }
-                </p>
-              </div>
-            </Center>
+            {/* Block user to prompt evolution if level not reached */}
           </div>
-        }
+        </Button>
+          {(state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm)) &&
+            <div className='absolute top-0 w-60 bg-gray-900/70 h-80 rounded-lg'>
+              <Center>
+                <div className='flex flex-col h-content w-44 gap-5'>
+                  <p
+                    className='text-center text-white'
+                  >
+                    {
+                      isLastForm
+                        ? 'already at is maximum evolution form'
+                        : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
+                    }
+                  </p>
+                </div>
+              </Center>
+            </div>
+          }
+      </div>
       <Button
-        className='text-center w-44 px-3 py-2 mx-auto bg-white rounded hover:bg-gray-400'
+        className='text-center w-44 px-3 py-2 mx-auto bg-green-500 rounded hover:bg-green-400'
         onClick={handlePokemonUpgrades}
       >
-        <p className='font-bold'>upgrade {pokemon.name}</p>
+        <p className='font-bold'>upgrade</p>
       </Button>
     </div>
   )

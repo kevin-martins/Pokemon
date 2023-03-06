@@ -18,12 +18,17 @@ const EvolutionNames = ({
 }: Props) => {
   const { name, current_level } = pokemon
   return (
-    <p className='absolute text-2xl text-white left-1/2 -translate-x-1/2 translate-y-1/2'>
-      {state === TeamState.Evolve && hover && missingLevelToEvolve <= 0
-      ? capitalize(nextPokemonName)
-      : capitalize(pokemon.name)}{' '}
-      Lvl. {pokemon.current_level}
-    </p>
+    <section className='absolute w-full left-1/2 -translate-x-1/2 translate-y-1/2 text-white flex flex-row'>
+      <p className='text-2xl mx-auto'>
+        {state === TeamState.Evolve && hover && missingLevelToEvolve <= 0
+        ? capitalize(nextPokemonName)
+        : capitalize(pokemon.name)}
+      </p>
+      <p className='text-xl text-right leading-9'>
+        Lvl.
+      </p>
+      <p className='text-3xl mx-2 leading-7'>{pokemon.current_level}</p>
+    </section>
   )
 }
 

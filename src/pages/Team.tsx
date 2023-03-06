@@ -42,7 +42,7 @@ const Team = () => {
           {team.length > 0 &&
             <Button
               className={`text-center w-44 px-3 py-2 mx-auto hover:bg-gray-400 ${
-                teamState === TeamState.Evolve
+                teamState === TeamState.Remove
                   ? 'bg-gray-600'
                   : 'bg-white'
                 }`
