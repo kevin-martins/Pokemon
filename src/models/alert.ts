@@ -1,14 +1,14 @@
-import { NewPokemonDataProps } from "./pokemon";
-
 export enum AlertState {
     Add,
     Swap,
     Remove,
     AlreadyIn,
+    Full,
     None,
 }
 
 export type AlertProps = {
     action: AlertState,
-    pokemonChange: NewPokemonDataProps[],
+    pokemonSprite: string,
+    message: string,
 }
