@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAppSelector } from '../app/hooks'
 import Title from '../components/shared/Title'
-import { getFile, getPokeballFilename } from '../helpers/helpers'
+import { getPokeballFilename } from '../helpers/pokemons/getData'
+import { getFile } from '../helpers/utils'
 import { ItemUtilisation } from '../models/shop'
 
 const Shop = () => {

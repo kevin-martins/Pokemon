@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToTeam, removeToTeam } from '../../features/pokemon-slice'
-import { capitalize } from '../../helpers/helpers'
+import { capitalize } from '../../helpers/utils'
 import { NewPokemonDataProps } from '../../models/pokemon'
 import Button from '../shared/Button'
 import Center from '../shared/Center'

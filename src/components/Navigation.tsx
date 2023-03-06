@@ -1,4 +1,4 @@
-import { capitalize } from '../helpers/helpers'
+import { capitalize } from '../helpers/utils'
 import Redirection from './shared/Redirection'
 
 type NavigationProps = {

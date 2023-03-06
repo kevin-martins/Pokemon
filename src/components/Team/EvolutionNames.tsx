@@ -1,6 +1,4 @@
-import React from 'react'
-import { capitalize } from '../../helpers/helpers';
-import { NewPokemonDataProps } from '../../models/pokemon';
+import { capitalize } from '../../helpers/utils';
 import { TeamState } from '../../models/team';
 
 type Props = {

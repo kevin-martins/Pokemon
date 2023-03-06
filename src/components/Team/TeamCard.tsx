@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks'
 import { evolvesPokemon, givePokemonLevel, removeToTeam } from '../../features/pokemon-slice'
-import { capitalize, getCurrentPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPokemonEvolutionFormData } from '../../helpers/helpers'
+import { getCurrentPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPokemonEvolutionFormData } from '../../helpers/pokemons/getData'
 import { NewPokemonDataProps, NewPokemonEvolutionProps } from '../../models/pokemon'
 import { TeamState } from '../../models/team'
 import Button from '../shared/Button'
