@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { setOnlyDiscovered } from "../../features/pokemon-slice"
 import { NewPokemonDataProps } from "../../models/pokemon"
 import Checkbox from "../shared/Checkbox"
+import Title from "../shared/Title"
 import PokedexCard from "./PokedexCard"
 
 const Pokedex = (): JSX.Element => {
@@ -15,20 +16,22 @@ const Pokedex = (): JSX.Element => {
 
   return (
     <div>
-      <h1 className="text-center text-5xl text-white pt-5 pb-10">Pokedex</h1>
-      <Checkbox
-        text="only display discovered pokemons"
-        value={onlyDiscovered}
-        onChange={handleChange}
-      />
+      <div className="w-full flex flex-col pb-10">
+        <Title text="Pokedex" />
+        <Checkbox
+          text="only discovered pokemons"
+          value={onlyDiscovered}
+          className="text-white text-center"
+          onChange={handleChange}
+        />
+      </div>
       <section className="flex flex-row justify-center flex-wrap gap-6 p-5 w-full">
         {pokedex.map((pokemon: NewPokemonDataProps, i: number) => (
           onlyDiscovered ?
             (pokemon.discovered && <PokedexCard key={i + Date.now()} {...pokemon} />) :
-            (<PokedexCard key={i + Date.now()} {...pokemon} />)
+            <PokedexCard key={i + Date.now()} {...pokemon} />
         ))}
       </section>
-      {/* <Alert /> */}
     </div>
   )
 }

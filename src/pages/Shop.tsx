@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../app/hooks'
+import Title from '../components/shared/Title'
 import { getFile, getPokeballFilename } from '../helpers/helpers'
 import { ItemUtilisation } from '../models/shop'
 
@@ -7,6 +8,7 @@ const Shop = () => {
   const shop = useAppSelector(state => state.pokemon.shop)
   return (
     <div className='flex flex-row flex-wrap gap-4'>
+      <Title text="Shop" />
       {shop.map((item, i: number) => {
         const itemType: string = item.item.type === ItemUtilisation.Pokeball ? 'pokeballs' : 'foods'
         return (
