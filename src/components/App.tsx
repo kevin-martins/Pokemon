@@ -12,22 +12,30 @@ import Navigation from "./Navigation";
 import 'react-toastify/dist/ReactToastify.css';
 import { AlertProps } from "../models/alert";
 import Alert from "./shared/Alert";
+import { LoadingState } from "../models/loading";
 
 export const App = () => {
+  const status = useAppSelector<LoadingState>(state => state.pokemon.status)
   const alerts = useAppSelector<AlertProps[]>(state => state.pokemon.alerts)
 
   useEffect(() => {
     alerts.forEach((alert: AlertProps, i: number) => {
-      toast(<Alert {...alert} />, {
-        theme: "dark",
-      })
+      if (alert.pokemonSprite === null) {
+        toast.error(<Alert {...alert} />, {
+          theme: "dark",
+        })  
+      } else {
+        toast.success(<Alert {...alert} />, {
+          theme: "dark",
+        })
+      }
     })
   }, [alerts])
 
   return (
     <div className='bg-gray-800 min-h-screen'>
       <HashRouter>
-        <Navigation />
+        {status === LoadingState.Idle && <Navigation />}
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -38,23 +46,6 @@ export const App = () => {
           <Route path="*" element={<Error404 />} />
         </Routes>
       </HashRouter>
-      {/* <div className="container">
-        <SwitchTransition>
-          <CSSTransition
-            key={location.pathname}
-            // nodeRef={nodeRef}
-            timeout={300}
-            classNames="page"
-            unmountOnExit
-          >
-            {(state: any) => (
-              <div ref={nodeRef} className="page">
-                {currentOutlet}
-              </div>
-            )}
-          </CSSTransition>
-        </SwitchTransition>
-      </div> */}
     </div>
   );
 }
