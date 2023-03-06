@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchDataAsync } from '../features/pokemon-slice';
 import Loading from '../components/shared/Loading';
 import Pokedex from '../components/Pokedex';
 import { LoadingState } from '../models/loading';
-import Select from '../components/shared/Select';
 import InfiniteScroll from 'react-infinite-scroller';
 
 export const Home = () => {
