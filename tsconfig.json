@@ -21,9 +21,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "src/components/shared",
-    "tests/App.test.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     "tests",
   ]
 }
