@@ -1,13 +1,18 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../app/hooks'
-import { addToTeam } from '../../features/pokemon-slice'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { addToTeam, removeToTeam } from '../../features/pokemon-slice'
 import { capitalize } from '../../helpers/helpers'
 import { NewPokemonDataProps } from '../../models/pokemon'
 import Button from '../shared/Button'
 import Center from '../shared/Center'
+import Redirection from '../shared/Redirection'
 
 const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
+  const inTeam = !useAppSelector(state => state.pokemon.team)
+    .map((pkm: NewPokemonDataProps) => pkm.name)
+    .every(name => name !== pokemon.name)
   const [hover, setHover] = useState(false)
+  // const [inTeam, setInTeam] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const handleEnter = () => {
@@ -18,23 +23,53 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
     setHover(false)
   }
 
-  const handleClick = () => {
+  const handleAdd = () => {
+    console.log("add")
     dispatch(addToTeam(pokemon))
+  }
+
+  const handleRemove = () => {
+    console.log("remove")
+    dispatch(removeToTeam(pokemon))
+  }
+
+  const handleClick = () => {
+    console.log("in")
+    if (inTeam) {
+      dispatch(removeToTeam(pokemon))
+    } else {
+      dispatch(addToTeam(pokemon))
+    }
   }
 
   return (
     <div
-      className='relative bg-gray-900 w-80 h-80 rounded-lg'
+      className={`relative bg-gray-900 w-80 h-80 rounded-lg border-2 border-gray-900 
+      ${inTeam && 'border-green-500'}`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      {(hover && pokemon.discovered) &&
+      {hover &&
         <div className='absolute z-40 bg-gray-900/70 w-full h-full rounded-lg'>
           <Center>
-            <Button
-              children='Add to Team'
-              handleClick={handleClick}
-            />
+            <div className='flex flex-col h-content w-44 gap-5'>
+              {pokemon.discovered ? 
+                <>
+                  <Button
+                    className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+                    onClick={inTeam ? handleRemove : handleAdd}
+                  >
+                    <p>{inTeam ? 'Remove from Team' : 'Add to Team'}</p>
+                  </Button>
+                  <Redirection
+                    to={`/pokedex/${pokemon.id}`}
+                    className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+                  >
+                    about
+                  </Redirection>
+                </> : <p className='text-white'>Pokemon not discovered</p>
+              }
+            </div>
           </Center>
         </div>
       }
