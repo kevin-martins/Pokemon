@@ -24,9 +24,17 @@ export type NewPokemonSpeciesProps = {
 }
 
 export type GenerationRangeProps = {
-    generation: string,
+    value: string,
     from: number,
     to: number,
+}
+
+export type NewPokemonMovesProps = {
+    name: string,
+    power: number,
+    pp: number,
+    accuracy: number,
+    type: string,
 }
 
 export type NewPokemonDataProps = {
@@ -41,24 +49,25 @@ export type NewPokemonDataProps = {
     evolutions: NewPokemonEvolutionProps[],
     is_legendary: boolean,
     is_mythical: boolean,
-    moves: MovesProps[],
+    moves: NewPokemonMovesProps[],
+    current_moves: NewPokemonMovesProps[],
     sprites: SpritesProps,
     stats: StatsProps[],
     types: TypesProps[],
 }
 
-export type PokemonTeamProps = {
-    id: number,
-    name: string,
-    current_level: number,
-    current_xp: number,
-    to_next_level: number,
-    capture_rate: number,
-    evolutions: NewPokemonEvolutionProps[],
-    is_legendary: boolean,
-    is_mythical: boolean,
-    moves: MovesProps[],
-    sprites: SpritesProps,
-    stats: StatsProps[],
-    types: TypesProps[],
-}
+// export type PokemonTeamProps = {
+//     id: number,
+//     name: string,
+//     current_level: number,
+//     current_xp: number,
+//     to_next_level: number,
+//     capture_rate: number,
+//     evolutions: NewPokemonEvolutionProps[],
+//     is_legendary: boolean,
+//     is_mythical: boolean,
+//     moves: MovesProps[],
+//     sprites: SpritesProps,
+//     stats: StatsProps[],
+//     types: TypesProps[],
+// }

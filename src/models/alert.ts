@@ -9,6 +9,6 @@ export enum AlertState {
 
 export type AlertProps = {
     action: AlertState,
-    pokemonSprite: string,
+    pokemonSprite: string | null,
     message: string,
 }

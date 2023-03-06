@@ -1,4 +1,4 @@
-type TypeProps = {
+export type TypeProps = {
     name: string,
     url: string,
 }

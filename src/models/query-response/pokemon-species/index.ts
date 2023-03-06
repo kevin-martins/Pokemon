@@ -29,7 +29,7 @@ type GeneraProps = {
     language: LanguageProps,
 }
 
-type GenerationProps = {
+export type GenerationProps = {
     name: string,
     url: string,
 }

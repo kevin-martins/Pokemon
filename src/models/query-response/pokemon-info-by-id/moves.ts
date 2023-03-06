@@ -20,6 +20,6 @@ type VersionGroupDetailProps = {
 }
 
 export type MovesProps = {
-    move: MoveProps[],
-    version_group_detail: VersionGroupDetailProps[],
+    move: MoveProps,
+    version_group_details: VersionGroupDetailProps[],
 }
