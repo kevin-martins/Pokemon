@@ -2,8 +2,11 @@ import axios from 'axios';
 import { PokemonInfoByIdResponseProps } from '../../models/query-response/pokemon-info-by-id';
 import { PokemonEvolutionChainResponseProps } from '../../models/query-response/pokemon-evolution-chain';
 import { PokemonSpeciesResponseProps } from '../../models/query-response/pokemon-species';
+import { PokemonMovesResponseProps } from '../../models/query-response/pokemon-moves';
 
-type Responseprops =  PokemonEvolutionChainResponseProps | PokemonSpeciesResponseProps
+type Responseprops =  PokemonEvolutionChainResponseProps |
+PokemonSpeciesResponseProps |
+PokemonMovesResponseProps
 
 export const fetchPokemonInfoById = async (pokemonId: number): Promise<PokemonInfoByIdResponseProps> => {
     const response = await axios.request<PokemonInfoByIdResponseProps>({
@@ -12,7 +15,7 @@ export const fetchPokemonInfoById = async (pokemonId: number): Promise<PokemonIn
     return response.data
 }
 
-export const fetchPokemonDataByUrl = async <T>(apiCall: string): Promise<T> => {
+export const fetchPokemonDataByUrl = async <T extends Responseprops>(apiCall: string): Promise<T> => {
     const response = await axios.request<T>({ url: apiCall })
     const { data } = response
     return data
