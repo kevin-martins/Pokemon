@@ -1,11 +1,9 @@
 import { MovesProps } from "./query-response/pokemon-info-by-id/moves"
-import { SpeciesProps } from "./query-response/shared/species"
 import { StatsProps } from "./query-response/pokemon-info-by-id/stats"
 import { TypesProps } from "./query-response/pokemon-info-by-id/types"
-import { PokemonSpeciesResponseProps } from "./query-response/pokemon-species"
 import { NamesProps } from "./query-response/shared/names"
 
-type SpritesProps = {
+export type SpritesProps = {
     default: string,
     shiny: string,
 }
@@ -13,6 +11,7 @@ type SpritesProps = {
 export type NewPokemonEvolutionProps = {
     level: number,
     to: string,
+    sprite: string,
     current: boolean,
 }
 
@@ -22,6 +21,12 @@ export type NewPokemonSpeciesProps = {
     is_mythical: boolean,
     names: NamesProps[],
     evolutions: string,
+}
+
+export type GenerationRangeProps = {
+    generation: string,
+    from: number,
+    to: number,
 }
 
 export type NewPokemonDataProps = {
