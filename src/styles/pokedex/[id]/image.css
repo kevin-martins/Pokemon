@@ -1,0 +1,21 @@
+.outline-img {
+    -webkit-filter: drop-shadow(var(--outline-image) var(--outline-image) 0 black)
+                    drop-shadow(var(--outline-image) calc(var(--outline-image) * -1) 0 black)
+                    drop-shadow(calc(var(--outline-image) * -1) var(--outline-image) 0 black)
+                    drop-shadow(calc(var(--outline-image) * - 1) calc(var(--outline-image) * - 1) 0 black);
+    filter: drop-shadow(var(--outline-image) var(--outline-image) 0 black)
+            drop-shadow(var(--outline-image) calc(var(--outline-image) * -1) 0 black)
+            drop-shadow(calc(var(--outline-image) * -1) var(--outline-image) 0 black)
+            drop-shadow(calc(var(--outline-image) * -1) calc(var(--outline-image) * -1) 0 black);
+}
+
+.outline-selected {
+    -webkit-filter: drop-shadow(var(--outline-image) var(--outline-image) 0 rgb(167, 152, 26))
+                    drop-shadow(var(--outline-image) calc(var(--outline-image) * -1) 0 rgb(167, 152, 26))
+                    drop-shadow(calc(var(--outline-image) * -1) var(--outline-image) 0 rgb(167, 152, 26))
+                    drop-shadow(calc(var(--outline-image) * -1) calc(var(--outline-image) * -1) 0 rgb(167, 152, 26));
+    filter: drop-shadow(var(--outline-image) var(--outline-image) 0 rgb(167, 152, 26))
+            drop-shadow(var(--outline-image) calc(var(--outline-image) * -1) 0 rgb(167, 152, 26))
+            drop-shadow(calc(var(--outline-image) * -1) var(--outline-image) 0 rgb(167, 152, 26))
+            drop-shadow(calc(var(--outline-image) * -1) calc(var(--outline-image) * -1) 0 rgb(167, 152, 26));
+}

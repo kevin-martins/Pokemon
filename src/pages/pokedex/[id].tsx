@@ -1,56 +1,49 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { NewPokemonDataProps } from '../../models/pokemon';
-import { MovesProps } from '../../models/query-response/pokemon-info-by-id/moves';
-import Button from '../../components/shared/Button'
-
-const Card = (pokemon: NewPokemonDataProps) => {
-  const [pokemonMoves, SetPokemonMoves] = useState<MovesProps[]>()
-
-  const handlePokemonMoves = () => {
-    SetPokemonMoves(pokemon.moves)
-  }
-
-  return (
-    <Button
-      onClick={handlePokemonMoves}
-    >
-      {pokemon.evolutions.map(evolutions => (
-        <img
-          key={Date.now()}
-          src={evolutions.sprite}
-          alt={evolutions.to}
-          className='mx-auto'
-        />
-      ))}
-    </Button>
-    // <div className='mx-auto flex flex-row'>
-    // </div>
-  )
-}
-
-const Move = (move: MovesProps) => {
-  return (
-    <>
-    </>
-  )
-}
+import { NewPokemonDataProps, NewPokemonMovesProps } from '../../models/pokemon';
+import { getPokemonDataByIdentifier, getPokemonDataFromEvolutions } from '../../helpers/pokemons/getData';
+import PokemonCard from '../../components/Pokedex/[id]/PokemonCard';
+import Button from '../../components/shared/Button';
+import PokemonMove from '../../components/Pokedex/[id]/PokemonMove';
 
 const PokemonInfo = () => {
   const location = useLocation()
   const pokemonId: number = parseInt(location.pathname.split('/')[2])
   const pokedex = useAppSelector(state => state.pokemon.pokedex)
+  const pokemons = getPokemonDataFromEvolutions(pokedex, pokemonId)
+  const [selectedPokemon, setSelectedPokemon] = useState<NewPokemonDataProps>(
+    getPokemonDataByIdentifier(pokedex, pokemonId))
+
+  const handlePokemonSelected = (pokemon: NewPokemonDataProps) => {
+    setSelectedPokemon(pokemon)
+  }
 
   return (
-    <div className="text-white max-w-5xl">
-      {pokedex.reduce((acc: NewPokemonDataProps[], curr: NewPokemonDataProps) => {
-        if (curr.id === pokemonId)
-          acc.push(curr)
-        return acc
-      }, []).map(pkm => (
-        <Card key={Date.now()} {...pkm} />
-      ))}
+    <div className='w-full'>
+      <div className='flex flex-row w-full mx-auto max-w-6xl'>
+        {pokemons.map((pokemon: NewPokemonDataProps, i: number) => (
+          <Button
+            key={i + Date.now()}
+            className='relative w-96 h-96 mx-auto mt-20'
+            onClick={() => handlePokemonSelected(pokemon)}
+          >
+            <PokemonCard {...pokemon} selectedPokemon={selectedPokemon} />
+          </Button>
+        ))}
+      </div>
+      <section className='max-w-screen-xl grid grid-cols-4 mx-auto mt-24'>
+        {pokemons.map((pokemon: NewPokemonDataProps, i: number) => {
+          return (
+            <>
+              {selectedPokemon.name === pokemon.name
+                && pokemon.moves.map((move: NewPokemonMovesProps, i: number) => (
+                  <PokemonMove key={i + Date.now()} {...move} />
+              ))}
+            </>
+          )
+        })}
+      </section>
     </div>
   )
 }

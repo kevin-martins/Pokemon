@@ -5,6 +5,8 @@
 :root {
   --gaugeColor: rgb(56, 160, 240);
   --pokeball-size: 100px;
+  --damage-size: 5px;
+  --outline-image: 3px;
 }
 
 body {
