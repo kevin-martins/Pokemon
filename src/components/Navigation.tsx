@@ -23,8 +23,9 @@ export const Navigation = () => {
             key={i + Date.now()}
             to={option.to}
             className='hover:text-yellow-500'
-            children={capitalize(option.name)}
-          />
+          >
+            <p>{capitalize(option.name)}</p>
+          </Redirection>
         ))}
       </div>
     </nav>

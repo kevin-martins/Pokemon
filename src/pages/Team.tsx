@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Button from '../components/shared/Button'
 import Center from '../components/shared/Center'
+import Title from '../components/shared/Title'
 import TeamCard from '../components/Team/TeamCard'
 import { emptyTeam } from '../features/pokemon-slice'
 import { NewPokemonDataProps } from '../models/pokemon'
@@ -23,11 +24,32 @@ const Team = () => {
   return (
     <Center>
       <>
-        <h1 className="text-center text-5xl text-white pt-10 pb-5">My Team</h1>
+        <Title text="My Team" />
         <section className='flex gap-2 mt-10 h-content'>
-          {team.length > 0 && <Button children='Empty Your Team' handleClick={handleEmptyTeam} />}
-          {team.length > 0 && <Button children='Remove Selection' handleClick={() => handleTeamState(TeamState.Remove)} />}
-          {team.length > 0 && <Button children='Evolve Selection' handleClick={() => handleTeamState(TeamState.Evolve)} />}
+          {team.length > 0 &&
+            <Button
+              className='text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+              onClick={handleEmptyTeam}
+            >
+              <p>Empty Your Team</p>
+            </Button>
+          }
+          {team.length > 0 &&
+            <Button
+              className='text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+              onClick={() => handleTeamState(TeamState.Remove)}
+            >
+              <p>Remove Selection</p>
+            </Button>
+          }
+          {team.length > 0 &&
+            <Button
+              className='text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+              onClick={() => handleTeamState(TeamState.Evolve)}
+            >
+              <p>Evolve Selection</p>
+            </Button>
+          }
         </section>
         <section className='flex flex-row flex-wrap max-w-6xl gap-2 mt-10'>
           {team.map((pokemon: NewPokemonDataProps, i: number) => (
