@@ -1,12 +1,15 @@
 type Props = {
   text: string,
   value: boolean,
-  onChange: Function,
+  className: string,
+  onChange: () => void,
 }
 
-export const Checkbox = ({ text, value, onChange }: Props) => {
+export const Checkbox = ({ text, value, className, onChange }: Props) => {
   return (
-    <label className="text-white">
+    <label
+      className={className}
+    >
       <input type="checkbox" checked={value} onChange={() => onChange()} />
       {text}
     </label>
