@@ -1,5 +1,4 @@
 import { AlertProps } from '../../models/alert'
-import '../../styles/alert.css'
 
 const Alert = (alert: AlertProps) => {
   return (
