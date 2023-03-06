@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks'
-import { evolvesPokemon, removeToTeam } from '../../features/pokemon-slice'
-import { capitalize } from '../../helpers/helpers'
-import { NewPokemonDataProps } from '../../models/pokemon'
+import { evolvesPokemon, givePokemonLevel, removeToTeam } from '../../features/pokemon-slice'
+import { capitalize, getCurrentPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPokemonEvolutionFormData } from '../../helpers/helpers'
+import { NewPokemonDataProps, NewPokemonEvolutionProps } from '../../models/pokemon'
 import { TeamState } from '../../models/team'
 import Button from '../shared/Button'
+import Center from '../shared/Center'
+import EvolutionImages from './EvolutionImages'
+import EvolutionNames from './EvolutionNames'
 
 type Props = {
   pokemon: NewPokemonDataProps,
@@ -11,36 +15,101 @@ type Props = {
 }
 
 const TeamCard = ({ pokemon, state }: Props) => {
+  const [missingLevelToEvolve, setLevelMissingToEvolve] = useState<number>(getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level))
+  const [hover, setHover] = useState<boolean>(false)
+  const [isLastForm, setIsLastForm] = useState<boolean>(false)
+  const [nextPokemonForm, setNextPokemonForm] = useState<NewPokemonEvolutionProps>(getNextPokemonEvolutionFormData(pokemon.evolutions))
   const dispatch = useAppDispatch()
-
-  const handleRemoveOne = () => {
+  
+  const handleTeamStates = () => {
     if (state === TeamState.Remove)
-      dispatch(removeToTeam(pokemon.id))
-    else if (state === TeamState.Evolve)
+      dispatch(removeToTeam(pokemon))
+    else if (state === TeamState.Evolve) {
       dispatch(evolvesPokemon(pokemon))
+      setNextPokemonForm(getNextPokemonEvolutionFormData(pokemon.evolutions))
+    }
   }
 
+  const handlePokemonUpgrades = () => {
+    dispatch(givePokemonLevel(pokemon))
+  }
+
+  const handlerHoverState = () => {
+    setHover(current => !current)
+  }
+
+  useEffect(() => {
+    return () => {
+      const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level)
+      if (missingLevel <= 0) {
+        const currentEvolutionForm = getCurrentPokemonEvolutionFormData(pokemon.evolutions)
+        const nextEvolutionForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
+        if (currentEvolutionForm === nextEvolutionForm) {
+          setIsLastForm(true)
+        }
+      }
+      setLevelMissingToEvolve(missingLevel)
+    }
+  }, [pokemon.current_level])
+
   return (
-    <Button
-      className=''
-      addClassName={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
-        ${state === TeamState.Remove && 'hover:border-red-600'}
-        ${state === TeamState.Evolve && 'hover:border-green-600'}
-      `}
-      handleClick={handleRemoveOne}
+    <div
+      className='relative'
+      onMouseEnter={handlerHoverState}
+      onMouseLeave={handlerHoverState}
     >
-      <div
-        className={`relative w-full h-full ${state === TeamState.Remove && 'hover:grayscale'}`}
+      <Button
+        className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
+          ${state === TeamState.Remove && 'hover:border-red-600'}
+          ${state === TeamState.Evolve && 'hover:border-green-600'}
+        `}
+        onClick={handleTeamStates}
       >
-        <p className='absolute text-2xl text-white left-1/2 -translate-x-1/2 translate-y-1/2'>
-          {capitalize(pokemon.name)}
-        </p>
-        <div className='w-full h-full flex justify-center '>
-          <img src={pokemon.sprites.default} alt={pokemon.name} className='w-60 h-60 m-auto' />
-          {/* <img src={state !== TeamState.Evolve ? pokemon.sprites.default : pokemon.evolutions.} alt={pokemon.name} className='w-60 h-60 m-auto' /> */}
+        <div
+          className={`relative w-full h-full ${(state === TeamState.Remove && !isLastForm) && 'hover:grayscale'}`}
+        >
+          <EvolutionNames
+            state={state}
+            hover={hover}
+            missingLevelToEvolve={missingLevelToEvolve}
+            nextPokemonName={nextPokemonForm.to}
+            pokemon={pokemon}
+          />
+          <div className='w-full h-full flex justify-center '>
+            <EvolutionImages
+              state={state}
+              hover={hover}
+              missingLevelToEvolve={missingLevelToEvolve}
+              isLastForm={isLastForm}
+              nextPokemonFormSprite={nextPokemonForm.sprite}
+              pokemon={pokemon}
+            />
+          </div>
+
+          {/* Block user to prompt evolution if level not reached */}
         </div>
-      </div>
-    </Button>
+      </Button>
+        {(state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm)) &&
+          <div className='absolute top-0 w-60 bg-gray-900/70 h-full rounded-lg'>
+            <Center>
+              <div className='flex flex-col h-content w-44 gap-5'>
+                <p
+                  className='text-center text-white'
+                >
+                  {
+                    isLastForm
+                      ? 'already at is maximum evolution form'
+                      : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
+                  }
+                </p>
+              </div>
+            </Center>
+          </div>
+        }
+      <Button onClick={handlePokemonUpgrades}>
+        <p>upgrade {pokemon.name}</p>
+      </Button>
+    </div>
   )
 }
 

@@ -15,10 +15,15 @@ const Team = () => {
 
   const handleEmptyTeam = () => {
     dispatch(emptyTeam())
+    setTeamState(TeamState.None)
   }
 
   const handleTeamState = (newState: TeamState) => {
-    setTeamState(newState)
+    if (teamState === newState) {
+      setTeamState(TeamState.None)
+    } else {
+      setTeamState(newState)
+    }
   }
 
   return (
@@ -36,7 +41,9 @@ const Team = () => {
           }
           {team.length > 0 &&
             <Button
-              className='text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+              className={`text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400
+                ${teamState === TeamState.Remove && 'bg-gray-600'}
+              `}
               onClick={() => handleTeamState(TeamState.Remove)}
             >
               <p>Remove Selection</p>
@@ -44,7 +51,9 @@ const Team = () => {
           }
           {team.length > 0 &&
             <Button
-              className='text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+              className={`text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400
+              ${teamState === TeamState.Evolve && 'bg-gray-600'}
+              `}
               onClick={() => handleTeamState(TeamState.Evolve)}
             >
               <p>Evolve Selection</p>
