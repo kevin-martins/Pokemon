@@ -54,7 +54,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
 
   return (
     <div
-      className='relative'
+      className='relative flex flex-col gap-3'
       onMouseEnter={handlerHoverState}
       onMouseLeave={handlerHoverState}
     >
@@ -106,8 +106,11 @@ const TeamCard = ({ pokemon, state }: Props) => {
             </Center>
           </div>
         }
-      <Button onClick={handlePokemonUpgrades}>
-        <p>upgrade {pokemon.name}</p>
+      <Button
+        className='text-center w-44 px-3 py-2 mx-auto bg-white rounded hover:bg-gray-400'
+        onClick={handlePokemonUpgrades}
+      >
+        <p className='font-bold'>upgrade {pokemon.name}</p>
       </Button>
     </div>
   )

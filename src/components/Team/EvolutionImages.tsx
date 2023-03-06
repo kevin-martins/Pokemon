@@ -21,13 +21,13 @@ const EvolutionImages = ({
   return (
     <img
       src={
-        state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm
+        (state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm)
           ? nextPokemonFormSprite
           : pokemon.sprites.default
       }
     alt={pokemon.name}
     className={`w-60 h-60 m-auto ${
-      state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm
+      (state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm)
         ? 'grayscale'
         : ''
     }`}
