@@ -41,7 +41,7 @@ export const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/my-team" element={<Team />} />
           <Route path="/battle" element={<Battle />} />
-          <Route path="/shop" element={<Shop />} />
+          {/* <Route path="/shop" element={<Shop />} /> */}
           <Route path="/pokedex/:id" element={<PokemonInfo />} />
           <Route path="*" element={<Error404 />} />
         </Routes>

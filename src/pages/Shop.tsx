@@ -1,7 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../app/hooks'
 import Title from '../components/shared/Title'
-import { getPokeballFilename } from '../helpers/pokemons/getData'
 import { getFile } from '../helpers/utils'
 import { ItemUtilisation } from '../models/shop'
 
@@ -17,7 +16,7 @@ const Shop = () => {
             {/* <p>{getFile(`/assets/shop/${itemType}/${getPokeballFilename(item.item.name)}`)}</p> */}
             <p>{item.item.name}</p>
             <img
-              src={getFile(`/assets/shop/${itemType}/${getPokeballFilename(item.item.name)}`)}
+              // src={getFile(`/assets/shop/${itemType}/${getPokeballFilename(item.item.name)}`)}
               alt={item.item.name}
               className='w-36 h-36'
             />

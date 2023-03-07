@@ -13,7 +13,6 @@ export const Home = () => {
   const dispatch = useAppDispatch()
 
   const getNextFetchCall = () => {
-    console.log("call", progression)
     if (status === LoadingState.Idle && generationRange) {
       const from = generationRange.from + progression
       const to = from + 19

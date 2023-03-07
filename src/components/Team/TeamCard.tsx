@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks'
-import { evolvesPokemon, givePokemonLevel, removeToTeam } from '../../features/pokemon-slice'
-import { getCurrentPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPokemonEvolutionFormData } from '../../helpers/pokemons/getData'
+import { evolvesPokemon, givePokemonLevel, removeFromTeam } from '../../features/pokemon-slice'
+import { getPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPokemonEvolutionFormData } from '../../helpers/pokemons/getData'
 import { NewPokemonDataProps, NewPokemonEvolutionProps } from '../../models/pokemon'
 import { TeamState } from '../../models/team'
 import Button from '../shared/Button'
@@ -23,7 +23,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
   
   const handleTeamStates = () => {
     if (state === TeamState.Remove)
-      dispatch(removeToTeam(pokemon))
+      dispatch(removeFromTeam(pokemon))
     else if (state === TeamState.Evolve) {
       dispatch(evolvesPokemon(pokemon))
       setNextPokemonForm(getNextPokemonEvolutionFormData(pokemon.evolutions))
@@ -42,7 +42,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
     return () => {
       const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level)
       if (missingLevel <= 0) {
-        const currentEvolutionForm = getCurrentPokemonEvolutionFormData(pokemon.evolutions)
+        const currentEvolutionForm = getPokemonEvolutionFormData(pokemon.evolutions)
         const nextEvolutionForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
         if (currentEvolutionForm === nextEvolutionForm) {
           setIsLastForm(true)

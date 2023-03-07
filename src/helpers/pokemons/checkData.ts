@@ -2,7 +2,7 @@ import { NewPokemonDataProps, NewPokemonEvolutionProps } from "../../models/poke
 import { getPokemonNames } from "./getData"
 
 export const isPokemonAlreadyInArray = (pokemonArray: { id: number }[], pokemonId: number): boolean => {
-    return !pokemonArray.every(pokemon => pokemonId !== pokemon.id)
+    return pokemonArray.every(pokemon => pokemonId !== pokemon.id)
 }
 
 export const isEvolutionFormAlreadyInArray = (

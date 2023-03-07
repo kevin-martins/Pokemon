@@ -1,5 +1,5 @@
 import { generationRange } from "../../../src/api/select"
-import { getCurrentPokemonEvolutionFormData, getCurrentPokemonEvolutionIndex, getEvolutionChainRecursively, getGenerationRangeByGenerationValue, getMissingLevelToEvolve, getNextPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonDataFormEvolutions, getPokemonDiscover, getPokemonIndexByIdentifier, getPokemonNames, getPokemonSpriteUrlById } from "../../../src/helpers/pokemons/getData"
+import { getPokemonEvolutionFormData, getCurrentPokemonEvolutionIndex, getEvolutionChainRecursively, getGenerationRangeByGenerationValue, getMissingLevelToEvolve, getNextPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonDataFormEvolutions, getPokemonDiscover, getPokemonIndexByIdentifier, getPokemonNames, getPokemonSpriteUrlById } from "../../../src/helpers/pokemons/getData"
 import { ChainProps } from '../../../src/models/query-response/pokemon-evolution-chain/chain'
 
 describe('getPokemonSpriteUrlById', () => {
@@ -126,7 +126,7 @@ describe('getCurrentPokemonEvolutionIndex', () => {
   })
 })
 
-describe('getCurrentPokemonEvolutionFormData', () => {
+describe('getPokemonEvolutionFormData', () => {
   it('should return the current pokemon evolution data', () => {
     const validData = { level: 1, name: "bulbasaur", current: true, sprite: getPokemonSpriteUrlById(1) }
     const pokemonEvolutionMock = [
@@ -134,7 +134,7 @@ describe('getCurrentPokemonEvolutionFormData', () => {
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: false, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getCurrentPokemonEvolutionFormData(pokemonEvolutionMock)
+    const result = getPokemonEvolutionFormData(pokemonEvolutionMock)
 
     expect(result).toStrictEqual(validData)
   })
@@ -146,7 +146,7 @@ describe('getCurrentPokemonEvolutionFormData', () => {
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getCurrentPokemonEvolutionFormData(pokemonEvolutionMock)
+    const result = getPokemonEvolutionFormData(pokemonEvolutionMock)
 
     expect(result).toStrictEqual(validData)
   })
@@ -172,7 +172,7 @@ describe('getNextPokemonEvolutionFormData', () => {
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getCurrentPokemonEvolutionFormData(pokemonEvolutionMock)
+    const result = getPokemonEvolutionFormData(pokemonEvolutionMock)
 
     expect(result).toStrictEqual(validData)
   })

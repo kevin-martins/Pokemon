@@ -3,9 +3,9 @@ import '../../styles/loading.css'
 
 const Loading = (): JSX.Element => {
   return (
-    <Center>
+    <div className="relative grid place-items-center min-w-screen">
       <div className="pokeball pulse" />
-    </Center>
+    </div>
   )
 }
 
