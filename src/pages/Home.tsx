@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchDataAsync } from '../features/pokemon-slice';
 import Loading from '../components/shared/Loading';
@@ -26,13 +26,17 @@ export const Home = () => {
     }
   }
 
+  useEffect(() => {
+    setProgression(0)
+  }, [generationRange.value])
+
   return (
     <div className='bg-gray-800 min-h-screen'>
       <InfiniteScroll
         pageStart={0}
         loadMore={getNextFetchCall}
         hasMore={progression >= generationRange.to ? false : true}
-        loader={status !== LoadingState.Idle && <Loading />}
+        loader={status !== LoadingState.Idle && <Loading key={Date.now()} />}
       >
         <Pokedex />
       </InfiniteScroll>

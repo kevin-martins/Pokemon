@@ -55,19 +55,3 @@ export type NewPokemonDataProps = {
     stats: StatsProps[],
     types: TypesProps[],
 }
-
-// export type PokemonTeamProps = {
-//     id: number,
-//     name: string,
-//     current_level: number,
-//     current_xp: number,
-//     to_next_level: number,
-//     capture_rate: number,
-//     evolutions: NewPokemonEvolutionProps[],
-//     is_legendary: boolean,
-//     is_mythical: boolean,
-//     moves: MovesProps[],
-//     sprites: SpritesProps,
-//     stats: StatsProps[],
-//     types: TypesProps[],
-// }

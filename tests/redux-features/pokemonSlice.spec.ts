@@ -1,79 +1,64 @@
-import React from 'react';
-// import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import reducer, { addToPokedex, PokemonState } from '../../src/features/pokemon-slice'
+import { LoadingState } from '../../src/models/loading'
 
-const mockStore = configureMockStore([thunk]);
+const mockStore: PokemonState = {
+  status: LoadingState.Idle,
+  pokedex: [],
+  team : [],
+  generationRange: {
+    value: "I",
+    from: 1,
+    to: 151,
+  },
+  alerts: [],
+  computerTeam: [],
+  evolutionList: [],
+  onlyDiscovered: true,
+}
 
-const valid
+const validPokemon = {
+  id: 1,
+  name: "bulbasaur",
+  names: [],
+  discovered: true,
+  current_level: 1,
+  current_xp: 0,
+  to_next_level: 0,
+  capture_rate: 0,
+  evolutions: [],
+  is_legendary: false,
+  is_mythical: false,
+  moves: [],
+  current_moves: [],
+  sprites: { default: "", shiny: "" },
+  stats: [],
+  types: [],
+}
 
-describe('PokemonComponent', () => {
-  let store;
+test('should add pokemon to the pokedex', () => {
+  const validStore = {
+    ...mockStore,
+    pokedex: [ validPokemon ]
+  }
+  expect(reducer(undefined, addToPokedex(validPokemon))).toEqual(validStore.pokedex)
+})
 
-  beforeEach(() => {
-    store = mockStore({
-      pokemon: {
-        status: 'idle',
-        pokedex: [],
-        team: [],
-        alert: { action: 'none', pokemonChange: [] },
-        computerTeam: [],
-        shop: [],
-        evolutionList: [],
-        berries: 10,
-        onlyDiscovered: true,
-      },
-    });
-  });
+// test('should handle a todo being added to an empty list', () => {
+//   const previousState: Todo[] = []
 
-  it('renders the component', async () => {
-    render(
-      <Provider store={store}>
-        <PokemonComponent />
-      </Provider>
-    );
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-  });
+//   expect(reducer(previousState, todoAdded('Run the tests'))).toEqual([
+//     { text: 'Run the tests', completed: false, id: 0 }
+//   ])
+// })
 
-  it('dispatches fetchDataAsync action on mount', async () => {
-    await store.dispatch(fetchDataAsync({ from: 1, to: 2 }));
-    expect(store.getActions().length).toBe(2);
-    expect(store.getActions()[0].type).toBe(fetchDataAsync.pending.type);
-    expect(store.getActions()[1].type).toBe(fetchDataAsync.fulfilled.type);
-  });
+// test('should handle a todo being added to an existing list', () => {
+//   const previousState: Todo[] = [
+//     { text: 'Run the tests', completed: true, id: 0 }
+//   ]
 
-  it('renders fetched data', async () => {
-    store = mockStore({
-      pokemon: {
-        status: 'succeeded',
-        pokedex: [
-          {
-            id: 1,
-            name: 'bulbasaur',
-            discovered: true,
-            evolutions: [],
-          },
-          {
-            id: 2,
-            name: 'ivysaur',
-            discovered: true,
-            evolutions: [],
-          },
-        ],
-        team: [],
-        alert: { action: 'none', pokemonChange: [] },
-        computerTeam: [],
-        shop: [],
-        evolutionList: [],
-        berries: 10,
-        onlyDiscovered: true,
-      },
-    })
-
-    expect(screen.getByText('Bulbasaur')).toBeInTheDocument();
-    expect(screen.getByText('Ivysaur')).toBeInTheDocument();
-  });
-
-  // Add more tests here...
-});
+//   expect(reducer(previousState, todoAdded('Use Redux'))).toEqual([
+//     { text: 'Run the tests', completed: true, id: 0 },
+//     { text: 'Use Redux', completed: false, id: 1 }
+//   ])
+// })

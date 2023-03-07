@@ -24,7 +24,7 @@ import { PokemonSpeciesResponseProps } from '../models/query-response/pokemon-sp
 import { ShopProps } from '../models/shop';
 import { fetchPokemonDataByUrl, fetchPokemonInfoById } from './pokemon/pokemonAPI';
 
-const generationRange: GenerationRangeProps = {
+const initialGeneration: GenerationRangeProps = {
     value: "I",
     from: 1,
     to: 151,
@@ -37,9 +37,7 @@ export interface PokemonState {
     generationRange: GenerationRangeProps,
     alerts: AlertProps[],
     computerTeam: NewPokemonDataProps[],
-    shop: ShopProps[],
     evolutionList: [],
-    berries: number,
     onlyDiscovered: boolean,
 }
 
@@ -47,12 +45,10 @@ const initialState: PokemonState = {
     status: LoadingState.Idle,
     pokedex: [],
     team : [],
-    generationRange: generationRange,
+    generationRange: initialGeneration,
     alerts: [],
     computerTeam: [],
-    shop: shop,
     evolutionList: [],
-    berries: 10,
     onlyDiscovered: true,
 }
 
@@ -72,7 +68,7 @@ const getPokemonMoves = async (moves: MovesProps[]): Promise<NewPokemonMovesProp
     }))    
 }
 
-const makeAllApiRequests = async (pokemonId: number) => {
+export const makeAllApiRequests = async (pokemonId: number) => {
     const pokemonInfoResponse = await fetchPokemonInfoById(pokemonId)
     const pokemonSpeciesResponse = await fetchPokemonDataByUrl<PokemonSpeciesResponseProps>(pokemonInfoResponse.species.url)
     const pokemonEvolutionResponse = await fetchPokemonDataByUrl<PokemonEvolutionChainResponseProps>(pokemonSpeciesResponse.evolution_chain.url)
@@ -145,6 +141,8 @@ const apiSlice = createSlice({
         setGeneration(state, action: PayloadAction<GenerationRangeProps>) {
             if (state.generationRange.value !== action.payload.value) {
                 state.pokedex = []
+                state.team = []
+                state.computerTeam = []
                 state.generationRange = action.payload
             }
         },
