@@ -6,7 +6,6 @@
     position: absolute;
     background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
     top: 50%;
-    /* transform: translateY(-50%); */
 }
 
 .pokeball:before,
@@ -53,11 +52,6 @@
 @keyframes pulse {
 	0% {
 		transform: scale(1);
-        /* box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); */
-	}
-    
-    70% {
-        /* transform: scale(1); */
 	}
 
 	100% {

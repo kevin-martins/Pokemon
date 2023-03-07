@@ -4,9 +4,7 @@ import Button from '../components/shared/Button'
 import Center from '../components/shared/Center'
 import Title from '../components/shared/Title'
 import { createComputerTeam } from '../features/pokemon-slice'
-import { LoadingState } from '../models/loading'
 import { NewPokemonDataProps } from '../models/pokemon'
-import '../styles/battle.css'
 
 const Battle = () => {
   const team = useAppSelector(state => state.pokemon.team)
@@ -45,7 +43,7 @@ const Battle = () => {
           >
             <div className='relative w-full h-full flex justify-center '>
               <p
-                className='absolute top-1/2 text-2xl font-bold text-color-outline'
+                className='absolute top-1/2 text-2xl font-bold'
               >
                 -100
               </p>
@@ -53,9 +51,6 @@ const Battle = () => {
             </div>
           </div>
         ))}
-      </section>
-      <section>
-
       </section>
     </>
   )

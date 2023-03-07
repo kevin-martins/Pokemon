@@ -84,8 +84,6 @@ const TeamCard = ({ pokemon, state }: Props) => {
                 pokemon={pokemon}
               />
             </div>
-
-            {/* Block user to prompt evolution if level not reached or if is last evolution state */}
           </div>
         </Button>
           {state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm) &&
