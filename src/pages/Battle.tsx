@@ -1,36 +1,42 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Button from '../components/shared/Button'
+import Center from '../components/shared/Center'
 import Title from '../components/shared/Title'
 import { createComputerTeam } from '../features/pokemon-slice'
+import { LoadingState } from '../models/loading'
 import { NewPokemonDataProps } from '../models/pokemon'
 import '../styles/battle.css'
 
 const Battle = () => {
   const team = useAppSelector(state => state.pokemon.team)
-  const [startBattle, setStartBattle] = useState<boolean>(false)
   const computerTeam = useAppSelector(state => state.pokemon.computerTeam)
+  const [startBattle, setStartBattle] = useState(false)
   const dispatch = useAppDispatch()
 
   const handleBattleState = () => {
-    setStartBattle(current => !current)
+    dispatch(createComputerTeam())
   }
 
   useEffect(() => {
-    return () => {
-      dispatch(createComputerTeam())
+    if (team.length > 0) {
+      setStartBattle(true)
+    } else {
+      setStartBattle(false)
     }
-  }, [startBattle])
-  
+  }, [])
 
   return (
     <>
       <Title text="Battle" />
-      <Button
-        onClick={handleBattleState}
-      >
-        <p>Start Battle</p>
-      </Button>
+      <Center>
+        <Button
+          className='text-center px-3 py-2 bg-white mx-auto mt-10 hover:bg-gray-400'
+          onClick={handleBattleState}
+        >
+          <p>Start Battle</p>
+        </Button>
+      </Center>
       <section className="flex flex-row justify-center mx-auto flex-wrap max-w-6xl gap-6 p-5 w-full">
         {computerTeam.map((pokemon: NewPokemonDataProps, i: number) => (
           <div
@@ -47,6 +53,9 @@ const Battle = () => {
             </div>
           </div>
         ))}
+      </section>
+      <section>
+
       </section>
     </>
   )
