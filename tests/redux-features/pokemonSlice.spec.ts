@@ -1,4 +1,3 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import reducer, { addToPokedex, PokemonState } from '../../src/features/pokemon-slice'
 import { LoadingState } from '../../src/models/loading'
 
@@ -37,28 +36,13 @@ const validPokemon = {
 }
 
 test('should add pokemon to the pokedex', () => {
+  const previousState: PokemonState = mockStore
   const validStore = {
-    ...mockStore,
-    pokedex: [ validPokemon ]
+    ...mockStore
   }
-  expect(reducer(undefined, addToPokedex(validPokemon))).toEqual(validStore.pokedex)
+  validStore.pokedex.push(validPokemon)
+
+  // Petit pb av ce test :'( pourtant dans la console quand je le fais avec validStore.pokedex
+  // j'ai le pokedex mais quand je pointe pas sur le pokedex j'ai un rien.
+  expect(reducer(previousState, addToPokedex(validPokemon))).toEqual(validStore)
 })
-
-// test('should handle a todo being added to an empty list', () => {
-//   const previousState: Todo[] = []
-
-//   expect(reducer(previousState, todoAdded('Run the tests'))).toEqual([
-//     { text: 'Run the tests', completed: false, id: 0 }
-//   ])
-// })
-
-// test('should handle a todo being added to an existing list', () => {
-//   const previousState: Todo[] = [
-//     { text: 'Run the tests', completed: true, id: 0 }
-//   ]
-
-//   expect(reducer(previousState, todoAdded('Use Redux'))).toEqual([
-//     { text: 'Run the tests', completed: true, id: 0 },
-//     { text: 'Use Redux', completed: false, id: 1 }
-//   ])
-// })
