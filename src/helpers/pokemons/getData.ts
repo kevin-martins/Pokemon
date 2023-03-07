@@ -45,27 +45,42 @@ export const getCurrentPokemonEvolutionForm = (
     return ""
 }
 
+export const updatePokemonEvolutionFormData = (
+    evolutions: NewPokemonEvolutionProps[]
+): NewPokemonEvolutionProps[] => {
+    const nextEvolutionForm = getNextPokemonEvolutionFormData(evolutions)
+
+    return evolutions.map(evolution => {
+        if (evolution.name === nextEvolutionForm.name) {
+            return {
+                ...evolution,
+                current: true,
+            }
+        } else {
+            return {
+                ...evolution,
+                current: false,
+            }
+        }
+    })
+}
+
 export const getNextPokemonEvolutionFormData = (
     evolutions: NewPokemonEvolutionProps[]
 ): NewPokemonEvolutionProps => {
     const currentFormIndex = getCurrentPokemonEvolutionIndex(evolutions)
+
     if (currentFormIndex >= evolutions.length - 1) {
-        return evolutions[currentFormIndex]
+        return {
+            ...evolutions[currentFormIndex],
+            current: true
+        }
     }
-    return evolutions[currentFormIndex + 1]
+    return {
+        ...evolutions[currentFormIndex + 1],
+        current: true
+    }
 }
-
-// export const get
-
-// export const getMaxEvolutionFormData = (
-//     pokemonArray: NewPokemonDataProps[],
-//     evolutions: NewPokemonEvolutionProps[]
-// ): NewPokemonDataProps => {
-//     const evolutionsFormName = getPokemonNames(evolutions)
-//     const maxEvolutionFormName = evolutionsFormName[evolutionsFormName.length - 1]
-
-//     return getPokemonDataByIdentifier(pokemonArray, maxEvolutionFormName)
-// }
 
 export const getPokemonNames = (
     pokemonArray: { name: string }[]
@@ -116,10 +131,6 @@ export const getPokemonDiscover = (
 
     return currentFormIndex <= nextFormIndex
 }
-
-// export const getPokeballFilename = (name: string): string => {
-//     return name.toLocaleLowerCase().split(/ ?ball/).join('ball').trim()
-// }
 
 export const getGenerationRangeByGenerationValue = (value: string): GenerationRangeProps => {
     return generationRange.reduce((acc: GenerationRangeProps, curr: GenerationRangeProps) => {

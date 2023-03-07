@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../app/hooks'
 import { evolvesPokemon, givePokemonLevel, removeFromTeam } from '../../features/pokemon-slice'
 import { getPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPokemonEvolutionFormData } from '../../helpers/pokemons/getData'
-import { NewPokemonDataProps, NewPokemonEvolutionProps } from '../../models/pokemon'
+import { NewPokemonDataProps } from '../../models/pokemon'
 import { TeamState } from '../../models/team'
 import Button from '../shared/Button'
 import Center from '../shared/Center'
@@ -15,18 +15,17 @@ type Props = {
 }
 
 const TeamCard = ({ pokemon, state }: Props) => {
-  const [missingLevelToEvolve, setLevelMissingToEvolve] = useState<number>(getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level))
+  const missingLevelToEvolve = getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level)
   const [hover, setHover] = useState<boolean>(false)
   const [isLastForm, setIsLastForm] = useState<boolean>(false)
-  const [nextPokemonForm, setNextPokemonForm] = useState<NewPokemonEvolutionProps>(getNextPokemonEvolutionFormData(pokemon.evolutions))
+  const nextPokemonForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
   const dispatch = useAppDispatch()
-  
+
   const handleTeamStates = () => {
     if (state === TeamState.Remove)
       dispatch(removeFromTeam(pokemon))
     else if (state === TeamState.Evolve) {
       dispatch(evolvesPokemon(pokemon))
-      setNextPokemonForm(getNextPokemonEvolutionFormData(pokemon.evolutions))
     }
   }
 
@@ -44,13 +43,12 @@ const TeamCard = ({ pokemon, state }: Props) => {
       if (missingLevel <= 0) {
         const currentEvolutionForm = getPokemonEvolutionFormData(pokemon.evolutions)
         const nextEvolutionForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
-        if (currentEvolutionForm === nextEvolutionForm) {
+        if (currentEvolutionForm.name === nextEvolutionForm.name) {
           setIsLastForm(true)
         }
       }
-      setLevelMissingToEvolve(missingLevel)
     }
-  }, [pokemon.current_level])
+  }, [pokemon])
 
   return (
     <div className='flex flex-col'>
@@ -62,7 +60,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
         <Button
           className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
             ${state === TeamState.Remove && 'hover:border-red-600'}
-            ${state === TeamState.Evolve && 'hover:border-green-600'}
+            ${state === TeamState.Evolve && !isLastForm && 'hover:border-green-600'}
           `}
           onClick={handleTeamStates}
         >
@@ -87,20 +85,19 @@ const TeamCard = ({ pokemon, state }: Props) => {
               />
             </div>
 
-            {/* Block user to prompt evolution if level not reached */}
+            {/* Block user to prompt evolution if level not reached or if is last evolution state */}
           </div>
         </Button>
-          {(state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm)) &&
+          {state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm) &&
             <div className='absolute top-0 w-60 bg-gray-900/70 h-80 rounded-lg'>
               <Center>
                 <div className='flex flex-col h-content w-44 gap-5'>
                   <p
                     className='text-center text-white'
                   >
-                    {
-                      isLastForm
-                        ? 'already at is maximum evolution form'
-                        : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
+                    {isLastForm
+                      ? 'already at is maximum evolution form'
+                      : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
                     }
                   </p>
                 </div>

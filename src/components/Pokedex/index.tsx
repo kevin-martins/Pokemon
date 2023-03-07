@@ -22,7 +22,7 @@ const Pokedex = (): JSX.Element => {
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto">
+    <div className="w-2/3 mx-auto">
       <div className="w-full flex flex-col pb-10">
         <Title text="Pokedex" />
         <Select
@@ -38,7 +38,7 @@ const Pokedex = (): JSX.Element => {
         />
       </div>
       <section
-        className={`flex flex-row flex-wrap gap-6 p-5 w-full`}
+        className={`flex flex-row flex-wrap gap-5 p-5 w-full`}
       >
         {pokedex.map((pokemon: NewPokemonDataProps, i: number) => (
           onlyDiscovered ?

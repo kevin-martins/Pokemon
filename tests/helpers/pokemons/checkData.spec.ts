@@ -7,17 +7,17 @@ describe('isPokemonAlreadyInArray', () => {
     { id: 3 },
   ]
   
-  it('should return true when PokemonID is in the array', () => {
-    const pokemonId = 2
-    const result = isPokemonAlreadyInArray(pokemonArray, pokemonId)
-    expect(result).toBe(true)
-  });
+  it('should return true when PokemonID is not in the array', () => {
+    const result = isPokemonAlreadyInArray(pokemonArray, 5)
 
-  it('should return false when PokemonID is not in the array', () => {
-    const pokemonId = 4
-    const result = isPokemonAlreadyInArray(pokemonArray, pokemonId)
-    expect(result).toBe(false)
+    expect(result).toBe(true)
   })
+  
+  it('should return false when PokemonID is in the array', () => {
+    const result = isPokemonAlreadyInArray(pokemonArray, 1)
+
+    expect(result).toBe(false)
+  });
 })
 
 describe('isEvolutionFormAlreadyInArray', () => {
@@ -29,7 +29,7 @@ describe('isEvolutionFormAlreadyInArray', () => {
   const teamMock = [
     {
       id: 0,
-      name: "bulbasaur",
+      name: "machin",
       names: [],
       discovered: true,
       current_level: 0,
@@ -47,7 +47,7 @@ describe('isEvolutionFormAlreadyInArray', () => {
     },
     {
       id: 0,
-      name: "ivysaur",
+      name: "truc",
       names: [],
       discovered: true,
       current_level: 0,

@@ -1,18 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { shop } from '../api/shop';
-import { isEvolutionFormAlreadyInArray, isPokemonAlreadyInArray } from '../helpers/pokemons/checkData';
-import { getEvolutionChainRecursively, getNextPokemonEvolutionFormData, getPokemonNames, getPokemonIndexByIdentifier, getPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonSpriteUrlById, getPokemonDiscover, getCurrentPokemonEvolutionIndex } from '../helpers/pokemons/getData';
+import {
+    isPokemonAlreadyInArray,
+    isEvolutionFormAlreadyInArray
+} from '../helpers/pokemons/checkData';
+import {
+    getPokemonNames,
+    getPokemonSpriteUrlById,
+    getPokemonDataByIdentifier,
+    getPokemonIndexByIdentifier,
+    getEvolutionChainRecursively,
+    updatePokemonEvolutionFormData,
+    getNextPokemonEvolutionFormData,
+} from '../helpers/pokemons/getData';
 import { capitalize, getRandomValue } from '../helpers/utils';
 import { AlertProps, AlertState } from '../models/alert';
 import { LoadingState } from '../models/loading';
-import { GenerationRangeProps, NewPokemonDataProps, NewPokemonEvolutionProps, NewPokemonMovesProps } from '../models/pokemon'
+import { GenerationRangeProps, NewPokemonDataProps, NewPokemonMovesProps } from '../models/pokemon'
 import { PokemonEvolutionChainResponseProps } from '../models/query-response/pokemon-evolution-chain';
 import { MovesProps } from '../models/query-response/pokemon-info-by-id/moves';
 import { PokemonMovesResponseProps } from '../models/query-response/pokemon-moves';
 import { PokemonSpeciesResponseProps } from '../models/query-response/pokemon-species';
 import { ShopProps } from '../models/shop';
 import { fetchPokemonDataByUrl, fetchPokemonInfoById } from './pokemon/pokemonAPI';
-import { createAlertParams } from './slice-utils';
 
 const generationRange: GenerationRangeProps = {
     value: "I",
@@ -90,7 +100,7 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
         id: pokemonInfoResponse.id,
         name: pokemonInfoResponse.name,
         names: [ ...pokemonSpeciesResponse.names ],
-        discovered: evolutions[0].name === pokemonInfoResponse.name && true,
+        discovered: evolutions[0].name === pokemonInfoResponse.name,
         current_level: 1,
         current_xp: 0,
         to_next_level: pokemonInfoResponse.base_experience,
@@ -134,6 +144,7 @@ const apiSlice = createSlice({
         },
         setGeneration(state, action: PayloadAction<GenerationRangeProps>) {
             if (state.generationRange.value !== action.payload.value) {
+                state.pokedex = []
                 state.generationRange = action.payload
             }
         },
@@ -145,38 +156,17 @@ const apiSlice = createSlice({
                 }
                 return acc
             }, 0)
-            for (let i = 0; i < 6; i++) {
-                const randomValue = getRandomValue(state.pokedex.length - 1)
-                if (maxPokemonAvailable < 6) {
-                    state.computerTeam.push(state.pokedex[randomValue])
-
-                } else if (isPokemonAlreadyInArray(state.computerTeam, state.pokedex[randomValue].id) &&
-                    state.pokedex[randomValue].discovered) {
-                        state.computerTeam.push(state.pokedex[randomValue])
-                    }
-                else {
-                    i--
-                }
-            }
+            const randomValue = getRandomValue(maxPokemonAvailable)
+            state.computerTeam.push(state.pokedex[randomValue])
         },
         givePokemonLevel(state, action: PayloadAction<NewPokemonDataProps>) {
-            const teamIndex = getPokemonIndexByIdentifier(state.team, action.payload.name)
+            const teamIndex = getPokemonIndexByIdentifier(state.team, action.payload.id)
 
             if (action.payload.current_level < 100) {
-                // evolutionNames.forEach((evolutionName: string) => {
-                //     const pokedexId = getPokemonIndexByIdentifier(state.pokedex, evolutionName)
-
-                // })
-                // state.pokedex[pokemonIndex] = {
-                //     ...state.pokedex[pokemonIndex],
-                //     current_level: action.payload.current_level + 1
-                // }
-
                 state.team[teamIndex] = {
-                    ...state.pokedex[teamIndex],
+                    ...state.team[teamIndex],
                     current_level: action.payload.current_level + 1
                 }
-                // state.team[teamIndex] = state.pokedex[pokemonIndex]
                 state.alerts = [{
                     action: AlertState.Upgrade,
                     pokemonSprite: action.payload.sprites.default,
@@ -192,28 +182,21 @@ const apiSlice = createSlice({
         },
         addToTeam(state, action: PayloadAction<NewPokemonDataProps>) {
             if (state.team.length < 6) {
-                const pokemonEvolutionFormData = getPokemonEvolutionFormData(action.payload.evolutions)
-
                 if (isEvolutionFormAlreadyInArray(action.payload.evolutions, state.team)) {
-                    // if (action.payload.name !== pokemonEvolutionFormData.name) {
-                    //     state.team.push(getPokemonDataByIdentifier(state.pokedex, pokemonEvolutionFormData.name))
-                    // }
-                    // choper l'evo max et l'ajoute a la place du pokemon actuel dans la team
-
-                    // const currentTeamIndex = getPokemonDataByIdentifier(state.team, action.payload.name)
-                    // state.alerts = [{
-                    //     action: AlertState.Add,
-                    //     pokemonSprite: pokemonEvolutionFormData.sprite,
-                    //     message: `Adding the maximum evolution form discovered`
-                    // }]
-                } else if (!isPokemonAlreadyInArray(state.team, action.payload.id)) {
-                    state.team.push(action.payload)
-                    state.alerts = [{
-                        action: AlertState.Add,
-                        pokemonSprite: action.payload.sprites.default,
-                        message: `${capitalize(action.payload.name)} added to your team !`
-                    }]
+                    action.payload.evolutions.forEach(pokemon => {
+                        if (pokemon.current) {
+                            state.team.push({
+                                ...getPokemonDataByIdentifier(state.pokedex, pokemon.name)
+                            })
+                        }
+                    })
                 }
+                state.team.push(action.payload)
+                state.alerts = [{
+                    action: AlertState.Add,
+                    pokemonSprite: action.payload.sprites.default,
+                    message: `${capitalize(action.payload.name)} added to your team !`
+                }]
             } else {
                 state.alerts = [{
                     action: AlertState.Full,
@@ -223,18 +206,20 @@ const apiSlice = createSlice({
             }
         },
         evolvesPokemon(state, action: PayloadAction<NewPokemonDataProps>) {
-            const pokedexIndex = getPokemonIndexByIdentifier(state.pokedex, action.payload.id)
             const teamIndex = getPokemonIndexByIdentifier(state.team, action.payload.id)
             const nextEvolutionFormData = getNextPokemonEvolutionFormData(action.payload.evolutions)
-            // const newEvolutions = action.payload.evolutions
+            const nextPokemonIndex = getPokemonIndexByIdentifier(state.pokedex, nextEvolutionFormData.name)
 
             if (nextEvolutionFormData.name !== action.payload.name) {
-                const newEvolutions = action.payload.evolutions
-                // newEvolutions[getCurrentPokemonEvolutionIndex()]
+                state.pokedex[nextPokemonIndex] = {
+                    ...state.pokedex[nextPokemonIndex],
+                    discovered: true,
+                    evolutions: updatePokemonEvolutionFormData(action.payload.evolutions),
+                }
                 state.team[teamIndex] = {
-                    ...state.pokedex[pokedexIndex],
+                    ...state.pokedex[nextPokemonIndex],
                     current_level: action.payload.current_level,
-                    evolutions: []
+                    evolutions: updatePokemonEvolutionFormData(action.payload.evolutions)
                 }
             }
             state.alerts = [
@@ -251,20 +236,27 @@ const apiSlice = createSlice({
             ]
         },
         removeFromTeam(state, action: PayloadAction<NewPokemonDataProps>) {
-            const pokedexIndex = getPokemonIndexByIdentifier(state.pokedex, action.payload.id)
-            // const 
+            const teamIndex = getPokemonIndexByIdentifier(state.team, action.payload.id)
+            const evolutionNames = getPokemonNames(action.payload.evolutions)
 
-            const index = state.team.findIndex(pokemon => pokemon.name === action.payload.name)
+            evolutionNames.forEach(name => {
+                const pokemonIndex = getPokemonIndexByIdentifier(state.pokedex, name)
+
+                state.pokedex[pokemonIndex] = {
+                    ...state.pokedex[pokemonIndex],
+                    current_level: action.payload.current_level,
+                    evolutions: action.payload.evolutions,
+                }
+            })
+            state.team.splice(teamIndex, 1)
             state.alerts = [{
                 action: AlertState.Remove,
                 pokemonSprite: action.payload.sprites.default,
                 message: `${capitalize(action.payload.name)} removed from your team !`
             }]
-            state.team.splice(index, 1)
 
         },
         emptyTeam(state) {
-            state.alerts = []
             state.team.forEach(pkm => {
                 state.alerts.push({
                     action: AlertState.Remove,
@@ -288,7 +280,6 @@ const apiSlice = createSlice({
                 action.payload.forEach(pkm => {
                     state.pokedex.push(pkm)
                 })
-                console.log(action.payload)
             })
             .addCase(fetchDataAsync.rejected, (state) => {
                 state.status = LoadingState.Failed

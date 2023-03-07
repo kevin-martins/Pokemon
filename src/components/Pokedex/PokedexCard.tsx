@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToTeam, removeFromTeam } from '../../features/pokemon-slice'
-import { getCurrentPokemonEvolutionForm, getPokemonEvolutionFormData } from '../../helpers/pokemons/getData'
+import { getCurrentPokemonEvolutionForm } from '../../helpers/pokemons/getData'
 import { getPokemonNames } from '../../helpers/pokemons/getData'
 import { capitalize } from '../../helpers/utils'
 import { NewPokemonDataProps, NewPokemonEvolutionProps } from '../../models/pokemon'
@@ -11,18 +11,9 @@ import Redirection from '../shared/Redirection'
 
 const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
   const team = useAppSelector(state => state.pokemon.team)
-  const [isInTeam, setIsInTeam] = useState<boolean>(false)
-  const [currentForm, setCurrentForm] = useState(getCurrentPokemonEvolutionForm(pokemon.evolutions))
-  // const currentForm = getCurrentPokemonEvolutionForm(pokemon.evolutions)
-  // check pokemon evolutions names
-  // make only the current pokemon available
+  const isInTeam = getPokemonNames(team).includes(pokemon.name)
   const [hover, setHover] = useState(false)
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    setIsInTeam(getPokemonNames(team).includes(pokemon.name))
-    setCurrentForm(getCurrentPokemonEvolutionForm(pokemon.evolutions))
-  }, [team])
 
   const handleEnter = () => {
     setHover(true)
@@ -42,17 +33,19 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
 
   return (
     <div
-      className={`relative bg-gray-900 w-80 h-80 rounded-lg border-2 border-gray-900 
-      ${isInTeam && 'border-green-500'}`}
+      className={`relative mx-auto bg-gray-900 w-80 h-80 rounded-lg border-2 border-gray-900 
+        ${isInTeam && 'border-green-500'}
+      `}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       {hover &&
         <div className='absolute z-40 bg-gray-900/70 w-full h-full rounded-lg'>
           <Center>
-            <div className='flex flex-col h-content w-44 gap-5'>
-              {pokemon.discovered && currentForm === pokemon.name
-                ? <>
+            <div className='flex flex-col text-center w-44 mx-auto gap-5'>
+              {!pokemon.discovered
+                ? <p className='text-white'>Pokemon not discovered</p>
+                : <>
                     <Button
                       className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
                       onClick={handleClick}
@@ -66,9 +59,6 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
                       about
                     </Redirection>
                   </>
-                : currentForm !== pokemon.name
-                ? <p className='text-white'>Pokemon already evolved in {currentForm}</p>
-                : <p className='text-white'>Pokemon not discovered</p>
               }
             </div>
           </Center>

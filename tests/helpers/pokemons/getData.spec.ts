@@ -1,5 +1,5 @@
 import { generationRange } from "../../../src/api/select"
-import { getPokemonEvolutionFormData, getCurrentPokemonEvolutionIndex, getEvolutionChainRecursively, getGenerationRangeByGenerationValue, getMissingLevelToEvolve, getNextPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonDataFormEvolutions, getPokemonDiscover, getPokemonIndexByIdentifier, getPokemonNames, getPokemonSpriteUrlById } from "../../../src/helpers/pokemons/getData"
+import { getPokemonEvolutionFormData, getCurrentPokemonEvolutionIndex, getEvolutionChainRecursively, getGenerationRangeByGenerationValue, getMissingLevelToEvolve, getNextPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonDataFormEvolutions, getPokemonDiscover, getPokemonIndexByIdentifier, getPokemonNames, getPokemonSpriteUrlById, updatePokemonEvolutionFormData } from "../../../src/helpers/pokemons/getData"
 import { ChainProps } from '../../../src/models/query-response/pokemon-evolution-chain/chain'
 
 describe('getPokemonSpriteUrlById', () => {
@@ -152,9 +152,27 @@ describe('getPokemonEvolutionFormData', () => {
   })
 })
 
+describe('updatePokemonEvolutionFormData', () => {
+  it('should return the evolution data with the current updated to true only for the next pokemon', () => {
+    const pokemonEvolutionMock = [
+      { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
+      { level: 16, name: "ivysaur", current: true, sprite: getPokemonSpriteUrlById(2) },
+      { level: 32, name: "venusaur", current: false, sprite: getPokemonSpriteUrlById(3) }
+    ]
+    const validData = [
+      { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
+      { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
+      { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
+    ]
+    const result = updatePokemonEvolutionFormData(pokemonEvolutionMock)
+
+    expect(result).toStrictEqual(validData)
+  })
+})
+
 describe('getNextPokemonEvolutionFormData', () => {
   it('should return the next pokemon evolution data for: ivysaur', () => {
-    const validData = { level: 32, name: "venusaur", current: false, sprite: getPokemonSpriteUrlById(3) }
+    const validData = { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
     const pokemonEvolutionMock = [
       { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
       { level: 16, name: "ivysaur", current: true, sprite: getPokemonSpriteUrlById(2) },
@@ -177,7 +195,6 @@ describe('getNextPokemonEvolutionFormData', () => {
     expect(result).toStrictEqual(validData)
   })
 })
-getPokemonNames
 
 describe('getPokemonNames', () => {
   it('should return all the pokemon\'s name in the array', () => {

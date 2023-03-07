@@ -22,14 +22,3 @@ export const isEvolutionFormAlreadyInArray = (
     }
     return false
 }
-
-// export const isEvolutionFormMaximumDiscovered = (
-//     evolutions: NewPokemonEvolutionProps[],
-//     name: string,
-// ): boolean => {
-//     const evolutionNames = getPokemonNames(evolutions)
-//     if (evolutionNames[evolutionNames.length - 1] === name) {
-//         return true
-//     }
-//     return false
-// }
