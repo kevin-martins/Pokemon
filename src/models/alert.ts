@@ -1,9 +1,10 @@
 export enum AlertState {
     Add,
-    Swap,
     Remove,
     AlreadyIn,
     Full,
+    Evolve,
+    Upgrade,
     None,
 }
 

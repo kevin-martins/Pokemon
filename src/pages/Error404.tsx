@@ -9,7 +9,9 @@ const Error404 = (): JSX.Element => {
         type="button"
         className=''
       >
-        <Redirection to="/" className='' children="Retour à l'accueil" />
+        <Redirection to="/" className=''>
+          <p>Retour à l&apos;accueil</p>
+        </Redirection>
       </button>
     </div>
   )

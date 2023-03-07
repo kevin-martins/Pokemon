@@ -32,7 +32,6 @@ export const Home = () => {
       <InfiniteScroll
         pageStart={0}
         loadMore={getNextFetchCall}
-        // initialLoad={dispatch(fetchDataAsync({ from: 1, to: 20 }))}
         hasMore={progression >= generationRange.to ? false : true}
         loader={status !== LoadingState.Idle && <Loading />}
       >

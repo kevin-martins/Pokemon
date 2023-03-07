@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import { NewPokemonDataProps, NewPokemonMovesProps } from '../../models/pokemon';
-import { getPokemonDataByIdentifier, getPokemonDataFromEvolutions } from '../../helpers/pokemons/getData';
+import { getPokemonDataByIdentifier, getPokemonDataFormEvolutions } from '../../helpers/pokemons/getData';
 import PokemonCard from '../../components/Pokedex/[id]/PokemonCard';
 import Button from '../../components/shared/Button';
 import PokemonMove from '../../components/Pokedex/[id]/PokemonMove';
@@ -11,7 +11,7 @@ const PokemonInfo = () => {
   const location = useLocation()
   const pokemonId: number = parseInt(location.pathname.split('/')[2])
   const pokedex = useAppSelector(state => state.pokemon.pokedex)
-  const pokemons = getPokemonDataFromEvolutions(pokedex, pokemonId)
+  const pokemons = getPokemonDataFormEvolutions(pokedex, pokemonId)
   const [selectedPokemon, setSelectedPokemon] = useState<NewPokemonDataProps>(
     getPokemonDataByIdentifier(pokedex, pokemonId))
 

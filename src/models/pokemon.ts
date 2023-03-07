@@ -10,7 +10,7 @@ export type SpritesProps = {
 
 export type NewPokemonEvolutionProps = {
     level: number,
-    to: string,
+    name: string,
     sprite: string,
     current: boolean,
 }

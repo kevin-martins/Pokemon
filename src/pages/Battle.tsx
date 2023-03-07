@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Button from '../components/shared/Button'
+import Title from '../components/shared/Title'
 import { createComputerTeam } from '../features/pokemon-slice'
-import { capitalize } from '../helpers/helpers'
 import { NewPokemonDataProps } from '../models/pokemon'
+import '../styles/battle.css'
 
 const Battle = () => {
   const team = useAppSelector(state => state.pokemon.team)
@@ -24,18 +25,25 @@ const Battle = () => {
 
   return (
     <>
+      <Title text="Battle" />
       <Button
-        handleClick={handleBattleState}
+        onClick={handleBattleState}
       >
-        Start Battle
+        <p>Start Battle</p>
       </Button>
-      <section className="flex flex-row justify-center flex-wrap gap-6 p-5 w-full">
+      <section className="flex flex-row justify-center mx-auto flex-wrap max-w-6xl gap-6 p-5 w-full">
         {computerTeam.map((pokemon: NewPokemonDataProps, i: number) => (
           <div
-            className='relative w-60 h-60 rounded-lg'
+            key={i + Date.now()}
+            className='w-72 h-72 rounded-lg'
           >
-            <div className='w-full h-full flex justify-center '>
-              <img src={pokemon.sprites.default} alt={pokemon.name} className={`w-60 h-60 m-auto`} />
+            <div className='relative w-full h-full flex justify-center '>
+              <p
+                className='absolute top-1/2 text-2xl font-bold text-color-outline'
+              >
+                -100
+              </p>
+              <img src={pokemon.sprites.default} alt={pokemon.name} className={`m-auto`} />
             </div>
           </div>
         ))}

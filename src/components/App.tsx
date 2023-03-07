@@ -35,7 +35,7 @@ export const App = () => {
   return (
     <div className='bg-gray-800 min-h-screen'>
       <HashRouter>
-        {status === LoadingState.Idle && <Navigation />}
+        <Navigation />
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />

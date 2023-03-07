@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToTeam, removeToTeam } from '../../features/pokemon-slice'
+import { getCurrentPokemonEvolutionFormData } from '../../helpers/pokemons/getData'
 import { capitalize } from '../../helpers/utils'
 import { NewPokemonDataProps } from '../../models/pokemon'
 import Button from '../shared/Button'
@@ -12,7 +13,6 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
     .map((pkm: NewPokemonDataProps) => pkm.name)
     .every(name => name !== pokemon.name)
   const [hover, setHover] = useState(false)
-  // const [inTeam, setInTeam] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const handleEnter = () => {
@@ -24,12 +24,10 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
   }
 
   const handleAdd = () => {
-    console.log("add")
     dispatch(addToTeam(pokemon))
   }
 
   const handleRemove = () => {
-    console.log("remove")
     dispatch(removeToTeam(pokemon))
   }
 

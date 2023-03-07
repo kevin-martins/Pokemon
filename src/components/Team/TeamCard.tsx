@@ -73,7 +73,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
               state={state}
               hover={hover}
               missingLevelToEvolve={missingLevelToEvolve}
-              nextPokemonName={nextPokemonForm.to}
+              nextPokemonName={nextPokemonForm.name}
               pokemon={pokemon}
             />
             <div className='w-full h-full flex justify-center '>
