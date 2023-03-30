@@ -16,8 +16,10 @@ const EvolutionNames = ({
   nextPokemonName,
   pokemon,
 }: Props) => {
+  // TODO: why not use destructured variable
   const { name, current_level } = pokemon
   return (
+    // TODO don't use translate (use margin or padding)
     <section className='absolute w-full left-1/2 -translate-x-1/2 translate-y-1/2 text-white flex flex-row'>
       <p className='text-2xl mx-auto'>
         {state === TeamState.Evolve && hover && missingLevelToEvolve <= 0

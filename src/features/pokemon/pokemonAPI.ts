@@ -17,6 +17,7 @@ export const fetchPokemonInfoById = async (pokemonId: number): Promise<PokemonIn
 
 export const fetchPokemonDataByUrl = async <T extends Responseprops>(apiCall: string): Promise<T> => {
     const response = await axios.request<T>({ url: apiCall })
-    const { data } = response
-    return data
+    // TODO: restructuring necessary
+
+    return response.data
 }

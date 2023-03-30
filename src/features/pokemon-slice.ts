@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { shop } from '../api/shop';
 import {
     isPokemonAlreadyInArray,
     isEvolutionFormAlreadyInArray
@@ -21,7 +20,7 @@ import { PokemonEvolutionChainResponseProps } from '../models/query-response/pok
 import { MovesProps } from '../models/query-response/pokemon-info-by-id/moves';
 import { PokemonMovesResponseProps } from '../models/query-response/pokemon-moves';
 import { PokemonSpeciesResponseProps } from '../models/query-response/pokemon-species';
-import { ShopProps } from '../models/shop';
+// TODO: import not used
 import { fetchPokemonDataByUrl, fetchPokemonInfoById } from './pokemon/pokemonAPI';
 
 const initialGeneration: GenerationRangeProps = {
@@ -53,6 +52,7 @@ const initialState: PokemonState = {
 }
 
 const getPokemonMoves = async (moves: MovesProps[]): Promise<NewPokemonMovesProps[]> => {
+    // TODO: why return await ?
     return await Promise.all(
         moves.map(async (move: MovesProps) => {
             const movesResponse = await fetchPokemonDataByUrl<PokemonMovesResponseProps>(move.move.url);
@@ -93,6 +93,7 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
     } = await makeAllApiRequests(pokemonId)
 
     return {
+        // TODO: property name in camelCase
         id: pokemonInfoResponse.id,
         name: pokemonInfoResponse.name,
         names: [ ...pokemonSpeciesResponse.names ],
@@ -117,6 +118,7 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
     }
 }
 
+// TODO: why not use promise all?
 export const fetchDataAsync = createAsyncThunk(
     'pokemon/fetchData',
     async ({ from, to }: { from: number, to: number}): Promise<NewPokemonDataProps[]> => {
@@ -179,6 +181,7 @@ const apiSlice = createSlice({
             }
         },
         addToTeam(state, action: PayloadAction<NewPokemonDataProps>) {
+            // TODO: too complex
             if (state.team.length < 6) {
                 if (isEvolutionFormAlreadyInArray(action.payload.evolutions, state.team)) {
                     action.payload.evolutions.forEach(pokemon => {

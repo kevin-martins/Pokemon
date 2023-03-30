@@ -4,6 +4,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: JSX.Element | JSX.Element[]
 }
 
+// TODO: what is the point of this component?
 const Button = ({ children, ...props }: ButtonProps) => (
   <button {...props}>
     {children}

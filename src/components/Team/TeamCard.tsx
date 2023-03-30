@@ -38,6 +38,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
   }
 
   useEffect(() => {
+    // TODO: why create a function here?
     return () => {
       const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level)
       if (missingLevel <= 0) {
@@ -57,6 +58,8 @@ const TeamCard = ({ pokemon, state }: Props) => {
         onMouseEnter={handlerHoverState}
         onMouseLeave={handlerHoverState}
       >
+        {/* TODO: use div it's more appropriate */}
+      {/* TODO: use cursor pointer on hover only */}
         <Button
           className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
             ${state === TeamState.Remove && 'hover:border-red-600'}
@@ -94,7 +97,9 @@ const TeamCard = ({ pokemon, state }: Props) => {
                     className='text-center text-white'
                   >
                     {isLastForm
+                    // TODO: capitalize
                       ? 'already at is maximum evolution form'
+                      // TODO: no nested ternary operation
                       : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
                     }
                   </p>

@@ -18,9 +18,11 @@ const EvolutionImages = ({
   nextPokemonFormSprite,
   pokemon,
 }: Props) => {
+  
   return (
     <img
       src={
+        // TODO: too much logic, refactor
         (state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm)
           ? nextPokemonFormSprite
           : pokemon.sprites.default

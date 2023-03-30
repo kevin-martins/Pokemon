@@ -64,9 +64,11 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
           </Center>
         </div>
       }
+      {/* TODO: why use translate? */}
       <p className='absolute text-2xl text-white left-1/2 -translate-x-1/2 translate-y-1/2'>
         {pokemon.discovered && capitalize(pokemon.name)}
       </p>
+      {/* TODO: why full height? */}
       <div className='w-full h-full flex justify-center '>
         <img src={pokemon.sprites.default} alt={pokemon.name} className={`w-60 h-60 m-auto ${!pokemon.discovered && 'grayscale'}`} />
       </div>

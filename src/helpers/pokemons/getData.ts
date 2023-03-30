@@ -7,6 +7,7 @@ export const getPokemonSpriteUrlById = (pokemonId: number | string): string => {
 }
 
 export const getEvolutionChainRecursively = (
+    // TODO: camelCase
     evolves_to: EvolvesToProps[] | [],
     evolutions: NewPokemonEvolutionProps[]
 ) => {
@@ -85,9 +86,12 @@ export const getNextPokemonEvolutionFormData = (
 export const getPokemonNames = (
     pokemonArray: { name: string }[]
 ): string[] => {
+    // TODO: typing below is unecessary
     return pokemonArray.map((pkm: { name: string }) => pkm.name)
 }
 
+
+// TODO: what is the point of this function?
 export const getPokemonDataFormEvolutions = <T extends string | number>(
     pokedex: NewPokemonDataProps[],
     identifier: T
@@ -121,6 +125,7 @@ export const getMissingLevelToEvolve = (
     return getNextPokemonEvolutionFormData(evolutions).level - currentLevel
 }
 
+// TODO: not used?
 export const getPokemonDiscover = (
     evolutionNames: string[],
     nextEvolutionName: string,
@@ -132,7 +137,9 @@ export const getPokemonDiscover = (
     return currentFormIndex <= nextFormIndex
 }
 
+// TODO: can't do a find?
 export const getGenerationRangeByGenerationValue = (value: string): GenerationRangeProps => {
+    return generationRange.find(generation => generation.value === value)
     return generationRange.reduce((acc: GenerationRangeProps, curr: GenerationRangeProps) => {
         if (curr.value === value)
             acc = { ...curr }

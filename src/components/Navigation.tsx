@@ -18,6 +18,7 @@ export const Navigation = () => {
       <div className='w-max mx-auto flex gap-5'>
         {navigationOptions.map((option: NavigationProps, i: number) => (
           <Redirection
+          // TODO: use better key
             key={i + Date.now()}
             to={option.to}
             className='hover:text-yellow-500'

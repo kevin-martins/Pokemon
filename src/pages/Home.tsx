@@ -15,6 +15,7 @@ export const Home = () => {
   const getNextFetchCall = () => {
     if (status === LoadingState.Idle && generationRange) {
       const from = generationRange.from + progression
+      // TODO: magic number => better to declare it as a const
       const to = from + 19
       if (to >= generationRange.to) {
         dispatch(fetchDataAsync({ from: from, to: generationRange.to }))
@@ -36,6 +37,7 @@ export const Home = () => {
         pageStart={0}
         loadMore={getNextFetchCall}
         hasMore={progression >= generationRange.to ? false : true}
+        // TODO: why a key for Loading
         loader={status !== LoadingState.Idle && <Loading key={Date.now()} />}
       >
         <Pokedex />

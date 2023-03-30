@@ -103,6 +103,7 @@ describe('getEvolutionChainRecursively', () => {
 })
 
 describe('getCurrentPokemonEvolutionIndex', () => {
+  // TODO: more explicit test names
   it('should be true', () => {
     const validData = [
       { level: 1, name: "bulbasaur", current: true, sprite: getPokemonSpriteUrlById(1) },
@@ -347,6 +348,7 @@ describe('getPokemonDataByIdentifier', () => {
   })
 })
 
+// TODO: ??
 getPokemonIndexByIdentifier
 
 describe('getPokemonIndexByIdentifier', () => {

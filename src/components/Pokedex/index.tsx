@@ -41,7 +41,9 @@ const Pokedex = (): JSX.Element => {
         className={`flex flex-row flex-wrap gap-5 p-5 w-full`}
       >
         {pokedex.map((pokemon: NewPokemonDataProps, i: number) => (
+          // TODO: use filter for onlyDiscovered pokemon
           onlyDiscovered ?
+          // TODO use pokemon id instead of array index
             (pokemon.discovered && <PokedexCard key={i + Date.now()} {...pokemon} />) :
             <PokedexCard key={i + Date.now()} {...pokemon} />
         ))}

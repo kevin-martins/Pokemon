@@ -86,6 +86,7 @@ describe('isEvolutionFormAlreadyInArray', () => {
   it('should return true if evolution forms is found in array', () => {
     const result = isEvolutionFormAlreadyInArray(validPokemonEvolutions, teamMock)
 
+    // TODO: why strict equal?
     expect(result).toStrictEqual(true)
   })
 
