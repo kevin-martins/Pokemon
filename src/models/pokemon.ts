@@ -16,9 +16,9 @@ export type NewPokemonEvolutionProps = {
 }
 
 export type NewPokemonSpeciesProps = {
-    captureRate: number,
-    isLegendary: boolean,
-    isMythical: boolean,
+    capture_rate: number,
+    is_legendary: boolean,
+    is_mythical: boolean,
     names: NamesProps[],
     evolutions: string,
 }

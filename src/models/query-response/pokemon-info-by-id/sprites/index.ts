@@ -1,37 +1,37 @@
 import { VersionProps } from "./version"
 
 type DreamWorldProps = {
-    frontDefault: string,
-    frontFemale: null,
+    front_default: string,
+    front_female: null,
 }
 
 type HomeProps = {
-    frontDefault: string,
-    frontFemale: null,
-    frontShiny: string,
-    frontShinyFemale: null
+    front_default: string,
+    front_female: null,
+    front_shiny: string,
+    front_shiny_female: null
 }
 
 type OfficialArtworkProps = {
-    frontDefault: string,
-    frontShiny: string,
+    front_default: string,
+    front_shiny: string,
 }
 
 type OtherProps = {
-    dreamWorld: DreamWorldProps,
+    dream_world: DreamWorldProps,
     home: HomeProps,
     [`official-artwork`]: OfficialArtworkProps
 }
 
 export type SpritesProps = {
-    backDefault: string | null,
-    backFemale: string | null,
-    backShiny: string | null,
-    backShinyFemale: string | null,
-    frontDefault: string | null,
-    frontFemale: string | null,
-    frontShiny: string | null,
-    frontShinyFemale: string | null,
+    back_default: string | null,
+    back_female: string | null,
+    back_shiny: string | null,
+    back_shiny_female: string | null,
+    front_default: string | null,
+    front_female: string | null,
+    front_shiny: string | null,
+    front_shiny_female: string | null,
     other: OtherProps,
     version: VersionProps,
 }

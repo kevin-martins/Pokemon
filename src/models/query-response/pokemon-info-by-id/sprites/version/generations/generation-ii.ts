@@ -1,28 +1,28 @@
 type CrystalProps = {
-    backDefault: string,
-    backShiny: string,
-    backShinyTransparent: string,
-    backTransparent: string,
-    frontDefault: string,
-    frontShiny: string,
-    frontShinyTransparent: string,
-    frontTransparent: string,
+    back_default: string,
+    back_shiny: string,
+    back_shiny_transparent: string,
+    back_transparent: string,
+    front_default: string,
+    front_shiny: string,
+    front_shiny_transparent: string,
+    front_transparent: string,
 }
 
 type GoldProps = {
-    backDefault: string,
-    backShiny: string,
-    frontDefault: string,
-    frontShiny: string,
-    frontTransparent: string,
+    back_default: string,
+    back_shiny: string,
+    front_default: string,
+    front_shiny: string,
+    front_transparent: string,
 }
 
 type SilverProps = {
-    backDefault: string,
-    backShiny: string,
-    frontDefault: string,
-    frontShiny: string,
-    frontTransparent: string,
+    back_default: string,
+    back_shiny: string,
+    front_default: string,
+    front_shiny: string,
+    front_transparent: string,
 }
 
 export type GenerationIIProps = {

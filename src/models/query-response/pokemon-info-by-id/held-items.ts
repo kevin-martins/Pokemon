@@ -15,5 +15,5 @@ type VersionDetailProps = {
 
 export type HeldItemsProps = {
     item: ItemProps,
-    versionDetails: VersionDetailProps[],
+    version_details: VersionDetailProps[],
 }

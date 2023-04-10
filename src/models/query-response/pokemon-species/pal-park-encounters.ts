@@ -5,6 +5,6 @@ type AreaProps = {
 
 export type PalParkEncountersProps = {
     area: AreaProps,
-    baseScore: number,
+    base_score: number,
     rate: number,
 }

@@ -4,8 +4,8 @@ export type ContestCombosProps = {
 }
 
 type ContestComboProps = {
-  useAfter: UseAfterComboProps[] | null,
-  useBefore: null,
+  use_after: UseAfterComboProps[] | null,
+  use_before: null,
 }
 
 type UseAfterComboProps = {

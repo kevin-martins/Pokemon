@@ -5,6 +5,6 @@ type AbilityProps = {
 
 export type AbilitiesProps = {
     ability: AbilityProps[],
-    isHidden: boolean,
+    is_hidden: boolean,
     slot: number,
 }

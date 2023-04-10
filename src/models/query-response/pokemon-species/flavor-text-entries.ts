@@ -6,7 +6,7 @@ type VersionProps = {
 }
 
 export type FlavorTextEntriesProps = {
-    flavorText: string,
+    flavor_text: string,
     langauge : LanguageProps,
     version: VersionProps,
 }

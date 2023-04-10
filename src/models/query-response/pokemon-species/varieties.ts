@@ -4,6 +4,6 @@ type PokemonProps = {
 }
 
 export type VarietiesProps = {
-    isDefault: boolean,
+    is_default: boolean,
     pokemon: PokemonProps,
 }

@@ -4,7 +4,7 @@ type StatProps = {
 }
 
 export type StatsProps = {
-    baseStat: number,
+    base_stat: number,
     effort: number,
     stat: StatProps,
 }

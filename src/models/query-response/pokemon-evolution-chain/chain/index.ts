@@ -3,8 +3,8 @@ import { EvolutionDetailsProps } from "./evolution-detail";
 import { EvolvesToProps } from "./evolves-to";
 
 export type ChainProps = {
-    evolutionDetails: EvolutionDetailsProps[] | [],
-    evolvesTo: EvolvesToProps[] | [],
-    isBaby: boolean,
+    evolution_details: EvolutionDetailsProps[] | [],
+    evolves_to: EvolvesToProps[] | [],
+    is_baby: boolean,
     species: SpeciesProps,
 }

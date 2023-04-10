@@ -1,34 +1,34 @@
 type DiamondPearlProps = {
-    backDefault: string | null,
-    backFemale: string | null,
-    backShiny: string | null,
-    backShinyFemale: string | null,
-    frontDefault: string | null,
-    frontFemale: string | null,
-    frontShiny: string | null,
-    frontShinyFemale: string | null;
+    back_default: string | null,
+    back_female: string | null,
+    back_shiny: string | null,
+    back_shiny_female: string | null,
+    front_default: string | null,
+    front_female: string | null,
+    front_shiny: string | null,
+    front_shiny_female: string | null;
 }
 
 type HeartgoldSoulsilverProps = {
-    backDefault: string | null,
-    backFemale: string | null,
-    backShiny: string | null,
-    backShinyFemale: string | null,
-    frontDefault: string | null,
-    frontFemale: string | null,
-    frontShiny: string | null,
-    frontShinyFemale: string | null;
+    back_default: string | null,
+    back_female: string | null,
+    back_shiny: string | null,
+    back_shiny_female: string | null,
+    front_default: string | null,
+    front_female: string | null,
+    front_shiny: string | null,
+    front_shiny_female: string | null;
 }
 
 type PlatinumProps = {
-    backDefault: string | null,
-    backFemale: string | null,
-    backShiny: string | null,
-    backShinyFemale: string | null,
-    frontDefault: string | null,
-    frontFemale: string | null,
-    frontShiny: string | null,
-    frontShinyFemale: string | null;
+    back_default: string | null,
+    back_female: string | null,
+    back_shiny: string | null,
+    back_shiny_female: string | null,
+    front_default: string | null,
+    front_female: string | null,
+    front_shiny: string | null,
+    front_shiny_female: string | null;
 }
 
 export type GenerationIVProps = {

@@ -2,6 +2,6 @@ import { ChainProps } from "./chain"
 
 export type PokemonEvolutionChainResponseProps = {
     id: number,
-    babyTriggerItem: null,
+    baby_trigger_item: null,
     chain: ChainProps,
 }
