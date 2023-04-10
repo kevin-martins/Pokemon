@@ -82,6 +82,8 @@ const makeAllApiRequests = async (pokemonId: number) => {
     return { pokemonInfoResponse }
 }
 
+
+
 const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonDataProps> => {
     const {
         pokemonInfoResponse,
@@ -139,7 +141,8 @@ export const fetchDataAsync = createAsyncThunk(
     async ({ from, to }: { from: number, to: number}): Promise<NewPokemonDataProps[]> => {
         const newPokemonData: NewPokemonDataProps[] = []
 
-        for (let pokemonId = from; pokemonId <= to; pokemonId++) {
+        for (let pokemonId = from; pokemonId < to; pokemonId++) {
+            console.log(pokemonId)
             newPokemonData.push(await organiseDataAfterResponse(pokemonId))
         }
       return newPokemonData

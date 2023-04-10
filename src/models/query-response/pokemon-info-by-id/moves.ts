@@ -14,12 +14,12 @@ type VersionGroupProps = {
 }
 
 type VersionGroupDetailProps = {
-    level_learned_at: number,
-    move_learn_method: MoveLearnMethodProps,
-    version_group: VersionGroupProps,
+    levelLearnedAt: number,
+    moveLearnMethod: MoveLearnMethodProps,
+    versionGroup: VersionGroupProps,
 }
 
 export type MovesProps = {
     move: MoveProps,
-    version_group_details: VersionGroupDetailProps[],
+    versionGroupDetails: VersionGroupDetailProps[],
 }

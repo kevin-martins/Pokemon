@@ -21,15 +21,15 @@ const validPokemon = {
   name: "bulbasaur",
   names: [],
   discovered: true,
-  current_level: 1,
-  current_xp: 0,
-  to_next_level: 0,
-  capture_rate: 0,
+  currentLevel: 1,
+  currentXp: 0,
+  toNextLevel: 0,
+  captureRate: 0,
   evolutions: [],
-  is_legendary: false,
-  is_mythical: false,
+  isLegendary: false,
+  isMythical: false,
   moves: [],
-  current_moves: [],
+  currentMoves: [],
   sprites: { default: "", shiny: "" },
   stats: [],
   types: [],
@@ -42,7 +42,5 @@ test('should add pokemon to the pokedex', () => {
   }
   validStore.pokedex.push(validPokemon)
 
-  // Petit pb av ce test :'( pourtant dans la console quand je le fais avec validStore.pokedex
-  // j'ai le pokedex mais quand je pointe pas sur le pokedex j'ai un rien.
   expect(reducer(previousState, addToPokedex(validPokemon))).toEqual(validStore)
 })

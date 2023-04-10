@@ -38,6 +38,12 @@ const TeamCard = ({ pokemon, state }: Props) => {
     setHover(current => !current)
   }
 
+  // useEffect(() => {
+  //   if (state === TeamState.Evolve) {
+
+  //   }
+  // }, [state])
+
   useEffect(() => {
     const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.currentLevel)
     if (missingLevel <= 0) {

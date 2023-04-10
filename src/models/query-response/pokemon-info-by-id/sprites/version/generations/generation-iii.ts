@@ -1,20 +1,20 @@
 type EmeraldProps = {
-    front_default: string,
-    front_shiny: string,
+    frontDefault: string,
+    frontShiny: string,
 }
 
 type FireredLeafgreenProps = {
-    back_default: string,
-    back_shiny: string,
-    front_default: string,
-    front_shiny: string,
+    backDefault: string,
+    backShiny: string,
+    frontDefault: string,
+    frontShiny: string,
 }
 
 type RubisSapphireProps = {
-    back_default: string,
-    back_shiny: string,
-    front_default: string,
-    front_shiny: string,
+    backDefault: string,
+    backShiny: string,
+    frontDefault: string,
+    frontShiny: string,
 }
 
 export type GenerationIIIProps = {

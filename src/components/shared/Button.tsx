@@ -4,7 +4,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: JSX.Element | JSX.Element[]
 }
 
-// adding style
+// must add style
 const Button = ({ children, ...props }: ButtonProps) => (
   <button {...props}>
     {children}

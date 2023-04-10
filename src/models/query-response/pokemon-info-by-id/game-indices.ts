@@ -4,6 +4,6 @@ type VersionProps = {
 }
 
 export type GameIndicesProps = {
-    game_index: number,
+    gameIndex: number,
     version: VersionProps[],
 }

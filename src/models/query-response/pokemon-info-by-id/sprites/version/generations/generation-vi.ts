@@ -1,15 +1,15 @@
 type OmegaRubisAlphaSapphireProps = {
-    front_default: string | null,
-    front_female: string | null,
-    front_shiny: string | null,
-    front_shiny_female: string | null
+    frontDefault: string | null,
+    frontFemale: string | null,
+    frontShiny: string | null,
+    frontShinyFemale: string | null
 }
 
 type XYProps = {
-    front_default: string | null,
-    front_female: string | null,
-    front_shiny: string | null,
-    front_shiny_female: string | null
+    frontDefault: string | null,
+    frontFemale: string | null,
+    frontShiny: string | null,
+    frontShinyFemale: string | null
 }
 
 export type GenerationVIProps = {

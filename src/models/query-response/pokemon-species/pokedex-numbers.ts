@@ -4,6 +4,6 @@ type PokedexProps = {
 }
 
 export type PokedexNumbersProps = {
-    entry_number: number,
+    entryNumber: number,
     pokedex: PokedexProps,
 }
