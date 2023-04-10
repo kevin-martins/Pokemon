@@ -38,7 +38,7 @@ const Battle = () => {
       <section className="flex flex-row justify-center mx-auto flex-wrap max-w-6xl gap-6 p-5 w-full">
         {computerTeam.map((pokemon: NewPokemonDataProps, i: number) => (
           <div
-            key={i + Date.now()}
+            key={i}
             className='w-72 h-72 rounded-lg'
           >
             <div className='relative w-full h-full flex justify-center '>

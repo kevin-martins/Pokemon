@@ -68,7 +68,7 @@ const Team = () => {
         </section>
         <section className='flex flex-row flex-wrap max-w-6xl gap-2 mt-10'>
           {team.map((pokemon: NewPokemonDataProps, i: number) => (
-            <TeamCard key={i + Date.now()} pokemon={pokemon} state={teamState} />
+            <TeamCard key={i} pokemon={pokemon} state={teamState} />
           ))}
         </section>
       </>

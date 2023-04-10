@@ -9,3 +9,7 @@ export const getRandomValue = (max: number) => {
 export const getFile = (path: string, ext = "png"): string => {
     return process.env.PUBLIC_URL + path + "." + ext
 }
+
+export const plurial = (condition: boolean, plurialType: string): string => {
+    return condition ? plurialType : ""
+}

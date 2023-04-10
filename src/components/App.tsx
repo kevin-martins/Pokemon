@@ -18,7 +18,6 @@ export const App = () => {
   const alerts = useAppSelector<AlertProps[]>(state => state.pokemon.alerts)
 
   useEffect(() => {
-    // TODO: unused variable
     alerts.forEach((alert: AlertProps, _: number) => {
       if (alert.pokemonSprite === null) {
         toast.error(<Alert {...alert} />, {

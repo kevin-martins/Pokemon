@@ -20,7 +20,6 @@ import { PokemonEvolutionChainResponseProps } from '../models/query-response/pok
 import { MovesProps } from '../models/query-response/pokemon-info-by-id/moves';
 import { PokemonMovesResponseProps } from '../models/query-response/pokemon-moves';
 import { PokemonSpeciesResponseProps } from '../models/query-response/pokemon-species';
-// TODO: import not used
 import { fetchPokemonDataByUrl, fetchPokemonInfoById } from './pokemon/pokemonAPI';
 
 const initialGeneration: GenerationRangeProps = {
@@ -52,13 +51,12 @@ const initialState: PokemonState = {
 }
 
 const getPokemonMoves = async (moves: MovesProps[]): Promise<NewPokemonMovesProps[]> => {
-    // TODO: why return await ?
-    return await Promise.all(
+    return Promise.all(
         moves.map(async (move: MovesProps) => {
             const movesResponse = await fetchPokemonDataByUrl<PokemonMovesResponseProps>(move.move.url);
 
             return {
-                learned_at: move.version_group_details[0].level_learned_at,
+                learnedAt: move.version_group_details[0].level_learned_at,
                 name: movesResponse.name,
                 power: movesResponse.power,
                 pp: movesResponse.pp,
@@ -68,47 +66,65 @@ const getPokemonMoves = async (moves: MovesProps[]): Promise<NewPokemonMovesProp
     }))    
 }
 
-export const makeAllApiRequests = async (pokemonId: number) => {
+const makeAllApiRequests = async (pokemonId: number) => {
     const pokemonInfoResponse = await fetchPokemonInfoById(pokemonId)
-    const pokemonSpeciesResponse = await fetchPokemonDataByUrl<PokemonSpeciesResponseProps>(pokemonInfoResponse.species.url)
-    const pokemonEvolutionResponse = await fetchPokemonDataByUrl<PokemonEvolutionChainResponseProps>(pokemonSpeciesResponse.evolution_chain.url)
-    const pokemonMovesResponse = await getPokemonMoves(pokemonInfoResponse.moves)
-    const initialPokemon = {
-        level: 1,
-        name: pokemonEvolutionResponse.chain.species.name,
-        current: true,
-        sprite: getPokemonSpriteUrlById(pokemonEvolutionResponse.chain.species.url.split('/')[6]),
-    }
-    const evolutions = getEvolutionChainRecursively(pokemonEvolutionResponse.chain.evolves_to, [initialPokemon])
+    // const pokemonSpeciesResponse = await fetchPokemonDataByUrl<PokemonSpeciesResponseProps>(pokemonInfoResponse.species.url)
+    // const pokemonEvolutionResponse = await fetchPokemonDataByUrl<PokemonEvolutionChainResponseProps>(pokemonSpeciesResponse.evolutionChain.url)
+    // const pokemonMovesResponse = await getPokemonMoves(pokemonInfoResponse.moves)
+    // const initialPokemon = {
+    //     level: 1,
+    //     name: pokemonEvolutionResponse.chain.species.name,
+    //     current: true,
+    //     sprite: getPokemonSpriteUrlById(pokemonEvolutionResponse.chain.species.url.split('/')[6]),
+    // }
+    // const evolutions = getEvolutionChainRecursively(pokemonEvolutionResponse.chain.evolvesTo, [initialPokemon])
 
-    return { pokemonInfoResponse, pokemonSpeciesResponse, pokemonMovesResponse, evolutions }
+    return { pokemonInfoResponse }
 }
 
 const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonDataProps> => {
     const {
         pokemonInfoResponse,
-        pokemonSpeciesResponse,
-        pokemonMovesResponse,
-        evolutions
+        // pokemonSpeciesResponse,
+        // pokemonMovesResponse,
+        // evolutions
     } = await makeAllApiRequests(pokemonId)
 
     return {
-        // TODO: property name in camelCase
+        // id: pokemonInfoResponse.id,
+        // name: pokemonInfoResponse.name,
+        // names: [ ...pokemonSpeciesResponse.names ],
+        // discovered: evolutions[0].name === pokemonInfoResponse.name,
+        // currentLevel: 1,
+        // currentXp: 0,
+        // toNextLevel: pokemonInfoResponse.baseExperience,
+        // captureRate: pokemonSpeciesResponse.captureRate,
+        // evolutions: [
+        //     ...evolutions,
+        // ],
+        // isLegendary: pokemonSpeciesResponse.isLegendary,
+        // isMythical: pokemonSpeciesResponse.isMythical,
+        // moves: [],
+        // currentMoves: [],
+        // sprites: {
+        //     default: pokemonInfoResponse.sprites.other.home.frontDefault,
+        //     shiny: pokemonInfoResponse.sprites.other.home.frontShiny,
+        // },
+        // stats: [ ...pokemonInfoResponse.stats ],
+        // types: [ ...pokemonInfoResponse.types ],
         id: pokemonInfoResponse.id,
         name: pokemonInfoResponse.name,
-        names: [ ...pokemonSpeciesResponse.names ],
-        discovered: evolutions[0].name === pokemonInfoResponse.name,
-        current_level: 1,
-        current_xp: 0,
-        to_next_level: pokemonInfoResponse.base_experience,
-        capture_rate: pokemonSpeciesResponse.capture_rate,
-        evolutions: [
-            ...evolutions,
-        ],
-        is_legendary: pokemonSpeciesResponse.is_legendary,
-        is_mythical: pokemonSpeciesResponse.is_mythical,
-        moves: pokemonMovesResponse,
-        current_moves: [],
+        names: [],
+        discovered: true,
+        currentLevel: 1,
+        currentXp: 0,
+        toNextLevel: pokemonInfoResponse.base_experience,
+        captureRate: 1,
+        evolutions: [],
+        isLegendary: true,
+        isMythical: true,
+        moves: [],
+        currentMoves: [],
         sprites: {
             default: pokemonInfoResponse.sprites.other.home.front_default,
             shiny: pokemonInfoResponse.sprites.other.home.front_shiny,
@@ -118,13 +134,12 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
     }
 }
 
-// TODO: why not use promise all?
 export const fetchDataAsync = createAsyncThunk(
     'pokemon/fetchData',
     async ({ from, to }: { from: number, to: number}): Promise<NewPokemonDataProps[]> => {
         const newPokemonData: NewPokemonDataProps[] = []
 
-        for (let pokemonId = from; pokemonId < to; pokemonId++) {
+        for (let pokemonId = from; pokemonId <= to; pokemonId++) {
             newPokemonData.push(await organiseDataAfterResponse(pokemonId))
         }
       return newPokemonData
@@ -162,17 +177,17 @@ const apiSlice = createSlice({
         givePokemonLevel(state, action: PayloadAction<NewPokemonDataProps>) {
             const teamIndex = getPokemonIndexByIdentifier(state.team, action.payload.id)
 
-            if (action.payload.current_level < 100) {
+            if (action.payload.currentLevel < 100) {
                 state.team[teamIndex] = {
                     ...state.team[teamIndex],
-                    current_level: action.payload.current_level + 1
+                    currentLevel: action.payload.currentLevel + 1
                 }
                 state.alerts = [{
                     action: AlertState.Upgrade,
                     pokemonSprite: action.payload.sprites.default,
-                    message: `${capitalize(action.payload.name)} increases to level ${state.team[teamIndex].current_level}`
+                    message: `${capitalize(action.payload.name)} increases to level ${state.team[teamIndex].currentLevel}`
                 }]
-            } else if (action.payload.current_level === 100) {
+            } else if (action.payload.currentLevel === 100) {
                 state.alerts = [{
                     action: AlertState.Upgrade,
                     pokemonSprite: action.payload.sprites.default,
@@ -219,7 +234,7 @@ const apiSlice = createSlice({
                 }
                 state.team[teamIndex] = {
                     ...state.pokedex[nextPokemonIndex],
-                    current_level: action.payload.current_level,
+                    currentLevel: action.payload.currentLevel,
                     evolutions: updatePokemonEvolutionFormData(action.payload.evolutions)
                 }
             }
@@ -245,7 +260,7 @@ const apiSlice = createSlice({
 
                 state.pokedex[pokemonIndex] = {
                     ...state.pokedex[pokemonIndex],
-                    current_level: action.payload.current_level,
+                    currentLevel: action.payload.currentLevel,
                     evolutions: action.payload.evolutions,
                 }
             })
@@ -278,6 +293,7 @@ const apiSlice = createSlice({
             })
             .addCase(fetchDataAsync.fulfilled, (state, action) => {
                 state.status = LoadingState.Idle
+                console.log("call")
                 action.payload.forEach(pkm => {
                     state.pokedex.push(pkm)
                 })
