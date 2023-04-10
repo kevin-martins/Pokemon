@@ -1,13 +1,13 @@
 export type IconProps = {
-    front_default: string | null,
-    front_female: string | null
+    frontDefault: string | null,
+    frontFemale: string | null
 }
 
 type UltraSunUltraMoonProps = {
-    front_default: string | null,
-    front_female: string | null,
-    front_shiny: string | null,
-    front_shiny_female: string | null
+    frontDefault: string | null,
+    frontFemale: string | null,
+    frontShiny: string | null,
+    frontShinyFemale: string | null
 }
 
 export type GenerationVIIProps = {

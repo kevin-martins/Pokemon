@@ -15,7 +15,7 @@ type Props = {
 }
 
 const TeamCard = ({ pokemon, state }: Props) => {
-  const missingLevelToEvolve = getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level)
+  const missingLevelToEvolve = getMissingLevelToEvolve(pokemon.evolutions, pokemon.currentLevel)
   const [hover, setHover] = useState<boolean>(false)
   const [isLastForm, setIsLastForm] = useState<boolean>(false)
   const nextPokemonForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
@@ -37,16 +37,19 @@ const TeamCard = ({ pokemon, state }: Props) => {
     setHover(current => !current)
   }
 
+  // useEffect(() => {
+  //   if (state === TeamState.Evolve) {
+
+  //   }
+  // }, [state])
+
   useEffect(() => {
-    // TODO: why create a function here?
-    return () => {
-      const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.current_level)
-      if (missingLevel <= 0) {
-        const currentEvolutionForm = getPokemonEvolutionFormData(pokemon.evolutions)
-        const nextEvolutionForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
-        if (currentEvolutionForm.name === nextEvolutionForm.name) {
-          setIsLastForm(true)
-        }
+    const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.currentLevel)
+    if (missingLevel <= 0) {
+      const currentEvolutionForm = getPokemonEvolutionFormData(pokemon.evolutions)
+      const nextEvolutionForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
+      if (currentEvolutionForm.name === nextEvolutionForm.name) {
+        setIsLastForm(true)
       }
     }
   }, [pokemon])
@@ -58,10 +61,9 @@ const TeamCard = ({ pokemon, state }: Props) => {
         onMouseEnter={handlerHoverState}
         onMouseLeave={handlerHoverState}
       >
-        {/* TODO: use div it's more appropriate */}
       {/* TODO: use cursor pointer on hover only */}
-        <Button
-          className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 
+        <div
+          className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 hover:cursor-pointer
             ${state === TeamState.Remove && 'hover:border-red-600'}
             ${state === TeamState.Evolve && !isLastForm && 'hover:border-green-600'}
           `}
@@ -88,7 +90,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
               />
             </div>
           </div>
-        </Button>
+        </div>
           {state === TeamState.Evolve && (missingLevelToEvolve > 0 || isLastForm) &&
             <div className='absolute top-0 w-60 bg-gray-900/70 h-80 rounded-lg'>
               <Center>
@@ -97,10 +99,9 @@ const TeamCard = ({ pokemon, state }: Props) => {
                     className='text-center text-white'
                   >
                     {isLastForm
-                    // TODO: capitalize
-                      ? 'already at is maximum evolution form'
+                      ? 'Already at is maximum evolution form'
                       // TODO: no nested ternary operation
-                      : `level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
+                      : `Level to evolve not reached, missing ${missingLevelToEvolve} ${missingLevelToEvolve > 1 ? 'levels': 'level'}`
                     }
                   </p>
                 </div>

@@ -7,18 +7,17 @@ export const getPokemonSpriteUrlById = (pokemonId: number | string): string => {
 }
 
 export const getEvolutionChainRecursively = (
-    // TODO: camelCase
-    evolves_to: EvolvesToProps[] | [],
+    evolvesTo: EvolvesToProps[] | [],
     evolutions: NewPokemonEvolutionProps[]
 ) => {
-    evolves_to.forEach((e: EvolvesToProps) => {
+    evolvesTo.forEach((e: EvolvesToProps) => {
         evolutions.push({
-            level: e.evolution_details[0].min_level,
+            level: e.evolutionDetails[0].minLevel,
             name: e.species.name,
             sprite: getPokemonSpriteUrlById(e.species.url.split('/')[6]),
             current: false,
         })
-        return getEvolutionChainRecursively(e.evolves_to, evolutions)
+        return getEvolutionChainRecursively(e.evolvesTo, evolutions)
     })
     return evolutions
 }
@@ -86,7 +85,6 @@ export const getNextPokemonEvolutionFormData = (
 export const getPokemonNames = (
     pokemonArray: { name: string }[]
 ): string[] => {
-    // TODO: typing below is unecessary
     return pokemonArray.map((pkm: { name: string }) => pkm.name)
 }
 
@@ -137,12 +135,6 @@ export const getPokemonDiscover = (
     return currentFormIndex <= nextFormIndex
 }
 
-// TODO: can't do a find?
 export const getGenerationRangeByGenerationValue = (value: string): GenerationRangeProps => {
-    return generationRange.find(generation => generation.value === value)
-    return generationRange.reduce((acc: GenerationRangeProps, curr: GenerationRangeProps) => {
-        if (curr.value === value)
-            acc = { ...curr }
-        return acc
-    }, { value: "", from: 0, to: 0 })
+    return generationRange.find(generation => generation.value === value)!
 }

@@ -24,7 +24,7 @@ const PokemonInfo = () => {
       <div className='flex flex-row w-full mx-auto max-w-6xl'>
         {pokemons.map((pokemon: NewPokemonDataProps, i: number) => (
           <Button
-            key={i + Date.now()}
+            key={i}
             className='relative w-96 h-96 mx-auto mt-20'
             onClick={() => handlePokemonSelected(pokemon)}
           >
@@ -38,7 +38,7 @@ const PokemonInfo = () => {
             <>
               {selectedPokemon.name === pokemon.name
                 && pokemon.moves.map((move: NewPokemonMovesProps, i: number) => (
-                  <PokemonMove key={i + Date.now()} {...move} />
+                  <PokemonMove key={i} {...move} />
               ))}
             </>
           )

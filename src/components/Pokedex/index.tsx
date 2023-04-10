@@ -17,7 +17,7 @@ const Pokedex = (): JSX.Element => {
     dispatch(setOnlyDiscovered(!onlyDiscovered))
   }
 
-  const handleFetchWhenOnBottom = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleGenerationFetch = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setGeneration(getGenerationRangeByGenerationValue(e.target.value)))
   }
 
@@ -28,7 +28,7 @@ const Pokedex = (): JSX.Element => {
         <Select
           className='w-60 mx-auto text-center text-xl font-medium px-4 py-2'
           options={generationOptions}
-          onChange={handleFetchWhenOnBottom}
+          onChange={handleGenerationFetch}
         />
         <Checkbox
           text="only discovered pokemons"
@@ -40,13 +40,11 @@ const Pokedex = (): JSX.Element => {
       <section
         className={`flex flex-row flex-wrap gap-5 p-5 w-full`}
       >
-        {pokedex.map((pokemon: NewPokemonDataProps, i: number) => (
-          // TODO: use filter for onlyDiscovered pokemon
-          onlyDiscovered ?
-          // TODO use pokemon id instead of array index
-            (pokemon.discovered && <PokedexCard key={i + Date.now()} {...pokemon} />) :
-            <PokedexCard key={i + Date.now()} {...pokemon} />
-        ))}
+        {
+          pokedex
+          .filter((filter: NewPokemonDataProps) => onlyDiscovered === filter.discovered)
+          .map((pokemon, i: number) => <PokedexCard key={i} {...pokemon} />)
+        }
       </section>
     </div>
   )

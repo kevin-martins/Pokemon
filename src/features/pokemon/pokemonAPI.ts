@@ -4,20 +4,20 @@ import { PokemonEvolutionChainResponseProps } from '../../models/query-response/
 import { PokemonSpeciesResponseProps } from '../../models/query-response/pokemon-species';
 import { PokemonMovesResponseProps } from '../../models/query-response/pokemon-moves';
 
-type Responseprops =  PokemonEvolutionChainResponseProps |
-PokemonSpeciesResponseProps |
-PokemonMovesResponseProps
+type Responseprops = PokemonEvolutionChainResponseProps
+    | PokemonSpeciesResponseProps
+    | PokemonMovesResponseProps
 
 export const fetchPokemonInfoById = async (pokemonId: number): Promise<PokemonInfoByIdResponseProps> => {
-    const response = await axios.request<PokemonInfoByIdResponseProps>({
+    const { data } = await axios.request<PokemonInfoByIdResponseProps>({
         url: `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
     })
-    return response.data
+
+    return data
 }
 
 export const fetchPokemonDataByUrl = async <T extends Responseprops>(apiCall: string): Promise<T> => {
-    const response = await axios.request<T>({ url: apiCall })
-    // TODO: restructuring necessary
+    const { data } = await axios.request<T>({ url: apiCall })
 
-    return response.data
+    return data
 }

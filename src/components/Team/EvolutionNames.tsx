@@ -6,7 +6,7 @@ type Props = {
   hover: boolean
   missingLevelToEvolve: number
   nextPokemonName: string
-  pokemon: { name: string, current_level: number }
+  pokemon: { name: string, currentLevel: number }
 }
 
 const EvolutionNames = ({
@@ -16,20 +16,19 @@ const EvolutionNames = ({
   nextPokemonName,
   pokemon,
 }: Props) => {
-  // TODO: why not use destructured variable
-  const { name, current_level } = pokemon
+  const { name, currentLevel } = pokemon
   return (
     // TODO don't use translate (use margin or padding)
     <section className='absolute w-full left-1/2 -translate-x-1/2 translate-y-1/2 text-white flex flex-row'>
       <p className='text-2xl mx-auto'>
         {state === TeamState.Evolve && hover && missingLevelToEvolve <= 0
         ? capitalize(nextPokemonName)
-        : capitalize(pokemon.name)}
+        : capitalize(name)}
       </p>
       <p className='text-xl text-right leading-9'>
         Lvl.
       </p>
-      <p className='text-3xl mx-2 leading-7'>{pokemon.current_level}</p>
+      <p className='text-3xl mx-2 leading-7'>{currentLevel}</p>
     </section>
   )
 }

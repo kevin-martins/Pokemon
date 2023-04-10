@@ -12,7 +12,7 @@ type DamageClassProps = {
 type EffectEntriesProps = {
   effect: string,
   language: LanguageProps,
-  short_effect: string,
+  shortEffect: string,
 }
 
 type VersionGroupProps = {
@@ -21,9 +21,9 @@ type VersionGroupProps = {
 }
 
 type FlavorTextEntriesProps = {
-  flavor_text: string,
+  flavorText: string,
   language: LanguageProps,
-  version_group: VersionGroupProps,
+  versionGroup: VersionGroupProps,
 }
 
 type LearnedByPokemonProps = {
@@ -37,7 +37,7 @@ type MachineProps = {
 
 type MachinesProps = {
   machine: MachineProps,
-  version_group: VersionGroupProps,
+  versionGroup: VersionGroupProps,
 }
 
 type AilmentProps = {
@@ -52,27 +52,27 @@ type CategoryProps = {
 
 type MetaProps = {
   ailment: AilmentProps,
-  ailment_chance: number,
+  ailmentChance: number,
   category: CategoryProps,
-  crit_rate: 1,
+  critRate: 1,
   drain: number,
-  flinch_chance: number,
+  flinchChance: number,
   healing: number,
-  max_hits: null,
-  max_turns: null,
-  min_hits: null,
-  min_turns: null,
-  stat_chance: number
+  maxHits: null,
+  maxTurns: null,
+  minHits: null,
+  minTurns: null,
+  statChance: number
 }
 
 type PastValuesProps = {
   accuracy: number,
-  effect_chance: null,
-  effect_entries: EffectEntriesProps[],
+  effectChance: null,
+  effectEntries: EffectEntriesProps[],
   power: null,
   pp: null,
   type: null,
-  version_group: VersionGroupProps,
+  versionGroup: VersionGroupProps,
 }
 
 type TargetProps = {
@@ -82,27 +82,27 @@ type TargetProps = {
 
 export type PokemonMovesResponseProps = {
   accuracy: number,
-  contest_combos: null,
-  contest_effect: ContestEffetcProps,
-  contest_type: ContestTypeProps,
-  damage_class: DamageClassProps,
-  effect_chance: null,
-  effect_changes: [],
-  effect_entries: EffectEntriesProps[],
-  flavor_text_entries: FlavorTextEntriesProps[],
+  contestCombos: null,
+  contestEffect: ContestEffetcProps,
+  contestType: ContestTypeProps,
+  damageClass: DamageClassProps,
+  effectChance: null,
+  effectChanges: [],
+  effectEntries: EffectEntriesProps[],
+  flavorTextEntries: FlavorTextEntriesProps[],
   generation: GenerationProps,
   id: number,
-  learned_by_pokemon: LearnedByPokemonProps[],
+  learnedByPokemon: LearnedByPokemonProps[],
   machines: MachinesProps[],
   meta: MetaProps,
   name: string,
   names: NamesProps[],
-  past_values: PastValuesProps,
+  pastValues: PastValuesProps,
   power: number,
   pp: number,
   priority: number,
-  stat_changes: [],
-  super_contest_effect: SuperContestEffectProps,
+  statChanges: [],
+  superContestEffect: SuperContestEffectProps,
   target: TargetProps,
   type: TypeProps,
 }

@@ -18,22 +18,13 @@ const EvolutionImages = ({
   nextPokemonFormSprite,
   pokemon,
 }: Props) => {
-  
+  const displayNextPokemonForm = state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm
   return (
     <img
-      src={
-        // TODO: too much logic, refactor
-        (state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm)
-          ? nextPokemonFormSprite
-          : pokemon.sprites.default
-      }
-    alt={pokemon.name}
-    className={`w-60 h-60 m-auto ${
-      (state === TeamState.Evolve && hover && missingLevelToEvolve <= 0 && !isLastForm)
-        ? 'grayscale'
-        : ''
-    }`}
-  />
+      src={displayNextPokemonForm ? nextPokemonFormSprite : pokemon.sprites.default}
+      alt={pokemon.name}
+      className={`w-60 h-60 m-auto ${displayNextPokemonForm ? 'grayscale' : ''}`}
+    />
   )
 }
 
