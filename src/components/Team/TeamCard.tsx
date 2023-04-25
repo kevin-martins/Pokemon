@@ -8,7 +8,7 @@ import Button from '../shared/Button'
 import Center from '../shared/Center'
 import EvolutionImages from './EvolutionImages'
 import EvolutionNames from './EvolutionNames'
-import { plurial } from '../../helpers/utils'
+import { plural } from '../../helpers/utils'
 
 type Props = {
   pokemon: NewPokemonDataProps,
@@ -19,8 +19,8 @@ const TeamCard = ({ pokemon, state }: Props) => {
   const missingLevelToEvolve = getMissingLevelToEvolve(pokemon.evolutions, pokemon.currentLevel)
   const [hover, setHover] = useState<boolean>(false)
   const [isLastForm, setIsLastForm] = useState<boolean>(false)
-  const nextPokemonForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
   const dispatch = useAppDispatch()
+  const nextPokemonForm = getNextPokemonEvolutionFormData(pokemon.evolutions)
 
   const handleTeamStates = () => {
     if (state === TeamState.Remove)
@@ -37,12 +37,6 @@ const TeamCard = ({ pokemon, state }: Props) => {
   const handlerHoverState = () => {
     setHover(current => !current)
   }
-
-  // useEffect(() => {
-  //   if (state === TeamState.Evolve) {
-
-  //   }
-  // }, [state])
 
   useEffect(() => {
     const missingLevel = getMissingLevelToEvolve(pokemon.evolutions, pokemon.currentLevel)
@@ -63,14 +57,14 @@ const TeamCard = ({ pokemon, state }: Props) => {
         onMouseLeave={handlerHoverState}
       >
         <div
-          className={`mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 hover:cursor-pointer
+          className={`relative mx-auto bg-gray-900 rounded-lg w-60 h-80 border-2 border-gray-900 hover:cursor-pointer
             ${state === TeamState.Remove && 'hover:border-red-600'}
             ${state === TeamState.Evolve && !isLastForm && 'hover:border-green-600'}
           `}
           onClick={handleTeamStates}
         >
           <div
-            className={`relative w-full h-full ${(state === TeamState.Remove && !isLastForm) && 'hover:grayscale'}`}
+            className={` w-full h-full ${(state === TeamState.Remove && !isLastForm) && 'hover:grayscale'}`}
           >
             <EvolutionNames
               state={state}
@@ -95,14 +89,12 @@ const TeamCard = ({ pokemon, state }: Props) => {
             <div className='absolute top-0 w-60 bg-gray-900/70 h-80 rounded-lg'>
               <Center>
                 <div className='flex flex-col h-content w-44 gap-5'>
-                  <p
-                    className='text-center text-white'
-                  >
-                    {isLastForm
-                      ? 'Already at is maximum evolution form'
-                      : `Level to evolve not reached, missing ${missingLevelToEvolve} ${plurial(missingLevelToEvolve > 1, "s")}`
-                    }
-                  </p>
+                  {isLastForm
+                    ? <p className='text-center text-white'>Already at is maximum evolution form</p>
+                    : <p className='text-center text-white'>
+                        Level to evolve not reached, missing {missingLevelToEvolve} {plural(missingLevelToEvolve > 1, "level", "levels")}
+                      </p>
+                  }
                 </div>
               </Center>
             </div>

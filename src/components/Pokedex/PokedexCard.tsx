@@ -22,12 +22,12 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
     setHover(false)
   }
 
-  const handleClick = () => {
-    if (isInTeam) {
-      dispatch(removeFromTeam(pokemon))
-    } else {
-      dispatch(addToTeam(pokemon))
-    }
+  const handleAddToTeam = () => {
+    dispatch(addToTeam(pokemon))
+  }
+
+  const handleRemoveFromTeam = () => {
+    dispatch(removeFromTeam(pokemon))
   }
 
   return (
@@ -39,28 +39,31 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
       onMouseLeave={handleLeave}
     >
       {hover &&
-        <div className='absolute grid bg-gray-900/70 w-full h-full rounded-lg place-items-center'>
+        <div className='absolute z-50 grid bg-gray-900/70 w-full h-full rounded-lg place-items-center'>
           <div className='flex flex-col text-center w-44 m-auto gap-5'>
             {!pokemon.discovered
               ? <p className='text-white'>Pokemon not discovered</p>
               : <>
-                  <Button
-                    className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
-                    onClick={handleClick}
-                  >
-                    <p>
-                      {isInTeam
-                        ? 'Remove from Team'
-                        : 'Add to Team'
-                      }
-                    </p>
-                  </Button>
-                  <Redirection
+                  {isInTeam ? 
+                    <Button
+                      className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+                      onClick={handleRemoveFromTeam}
+                    >
+                      <p>Remove from Team</p>
+                    </Button>
+                    : <Button
+                        className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
+                        onClick={handleAddToTeam}
+                      >
+                        <p>Add to Team</p>
+                      </Button>
+                  }
+                  {/* <Redirection
                     to={`/pokedex/${pokemon.id}`}
                     className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'
                   >
                     about
-                  </Redirection>
+                  </Redirection> */}
                 </>
             }
           </div>
