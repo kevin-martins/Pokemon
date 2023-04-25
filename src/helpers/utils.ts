@@ -10,6 +10,6 @@ export const getFile = (path: string, ext = "png"): string => {
     return process.env.PUBLIC_URL + path + "." + ext
 }
 
-export const plurial = (condition: boolean, plurialType: string): string => {
-    return condition ? plurialType : ""
+export const plural = (condition: boolean, singularWord: string, pluralWord: string): string => {
+    return condition ? pluralWord : singularWord
 }
