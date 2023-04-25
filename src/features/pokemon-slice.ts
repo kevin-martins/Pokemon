@@ -68,18 +68,18 @@ const getPokemonMoves = async (moves: MovesProps[]): Promise<NewPokemonMovesProp
 
 const makeAllApiRequests = async (pokemonId: number) => {
     const pokemonInfoResponse = await fetchPokemonInfoById(pokemonId)
-    // const pokemonSpeciesResponse = await fetchPokemonDataByUrl<PokemonSpeciesResponseProps>(pokemonInfoResponse.species.url)
-    // const pokemonEvolutionResponse = await fetchPokemonDataByUrl<PokemonEvolutionChainResponseProps>(pokemonSpeciesResponse.evolutionChain.url)
+    const pokemonSpeciesResponse = await fetchPokemonDataByUrl<PokemonSpeciesResponseProps>(pokemonInfoResponse.species.url)
+    const pokemonEvolutionResponse = await fetchPokemonDataByUrl<PokemonEvolutionChainResponseProps>(pokemonSpeciesResponse.evolution_chain.url)
     // const pokemonMovesResponse = await getPokemonMoves(pokemonInfoResponse.moves)
-    // const initialPokemon = {
-    //     level: 1,
-    //     name: pokemonEvolutionResponse.chain.species.name,
-    //     current: true,
-    //     sprite: getPokemonSpriteUrlById(pokemonEvolutionResponse.chain.species.url.split('/')[6]),
-    // }
-    // const evolutions = getEvolutionChainRecursively(pokemonEvolutionResponse.chain.evolvesTo, [initialPokemon])
+    const initialPokemon = {
+        level: 1,
+        name: pokemonEvolutionResponse.chain.species.name,
+        current: true,
+        sprite: getPokemonSpriteUrlById(pokemonEvolutionResponse.chain.species.url.split('/')[6]),
+    }
+    const evolutions = getEvolutionChainRecursively(pokemonEvolutionResponse.chain.evolves_to, [initialPokemon])
 
-    return { pokemonInfoResponse }
+    return { pokemonInfoResponse, pokemonSpeciesResponse, evolutions }
 }
 
 
@@ -87,44 +87,25 @@ const makeAllApiRequests = async (pokemonId: number) => {
 const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonDataProps> => {
     const {
         pokemonInfoResponse,
-        // pokemonSpeciesResponse,
+        pokemonSpeciesResponse,
         // pokemonMovesResponse,
-        // evolutions
+        evolutions
     } = await makeAllApiRequests(pokemonId)
 
     return {
-        // id: pokemonInfoResponse.id,
-        // name: pokemonInfoResponse.name,
-        // names: [ ...pokemonSpeciesResponse.names ],
-        // discovered: evolutions[0].name === pokemonInfoResponse.name,
-        // currentLevel: 1,
-        // currentXp: 0,
-        // toNextLevel: pokemonInfoResponse.baseExperience,
-        // captureRate: pokemonSpeciesResponse.captureRate,
-        // evolutions: [
-        //     ...evolutions,
-        // ],
-        // isLegendary: pokemonSpeciesResponse.isLegendary,
-        // isMythical: pokemonSpeciesResponse.isMythical,
-        // moves: [],
-        // currentMoves: [],
-        // sprites: {
-        //     default: pokemonInfoResponse.sprites.other.home.frontDefault,
-        //     shiny: pokemonInfoResponse.sprites.other.home.frontShiny,
-        // },
-        // stats: [ ...pokemonInfoResponse.stats ],
-        // types: [ ...pokemonInfoResponse.types ],
         id: pokemonInfoResponse.id,
         name: pokemonInfoResponse.name,
-        names: [],
-        discovered: true,
+        names: [ ...pokemonSpeciesResponse.names ],
+        discovered: evolutions[0].name === pokemonInfoResponse.name,
         currentLevel: 1,
         currentXp: 0,
         toNextLevel: pokemonInfoResponse.base_experience,
-        captureRate: 1,
-        evolutions: [],
-        isLegendary: true,
-        isMythical: true,
+        captureRate: pokemonSpeciesResponse.capture_rate,
+        evolutions: [
+            ...evolutions,
+        ],
+        isLegendary: pokemonSpeciesResponse.is_legendary,
+        isMythical: pokemonSpeciesResponse.is_mythical,
         moves: [],
         currentMoves: [],
         sprites: {
@@ -133,6 +114,25 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
         },
         stats: [ ...pokemonInfoResponse.stats ],
         types: [ ...pokemonInfoResponse.types ],
+        // id: pokemonInfoResponse.id,
+        // name: pokemonInfoResponse.name,
+        // names: [],
+        // discovered: true,
+        // currentLevel: 1,
+        // currentXp: 0,
+        // toNextLevel: pokemonInfoResponse.base_experience,
+        // captureRate: 1,
+        // evolutions: [],
+        // isLegendary: true,
+        // isMythical: true,
+        // moves: [],
+        // currentMoves: [],
+        // sprites: {
+        //     default: pokemonInfoResponse.sprites.other.home.front_default,
+        //     shiny: pokemonInfoResponse.sprites.other.home.front_shiny,
+        // },
+        // stats: [ ...pokemonInfoResponse.stats ],
+        // types: [ ...pokemonInfoResponse.types ],
     }
 }
 
