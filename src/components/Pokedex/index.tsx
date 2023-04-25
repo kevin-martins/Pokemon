@@ -1,4 +1,4 @@
-import { generationOptions } from "../../api/select"
+import { generationOptions } from "../../constants/select"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { setGeneration, setOnlyDiscovered } from "../../features/pokemon-slice"
 import { getGenerationRangeByGenerationValue } from "../../helpers/pokemons/getData"
@@ -40,9 +40,8 @@ const Pokedex = (): JSX.Element => {
       <section
         className={`flex flex-row flex-wrap gap-5 p-5 w-full`}
       >
-        {
-          pokedex
-          .filter((filter: NewPokemonDataProps) => onlyDiscovered === filter.discovered)
+        {pokedex
+          .filter((filter: NewPokemonDataProps) => onlyDiscovered === filter.discovered || !onlyDiscovered)
           .map((pokemon, i: number) => <PokedexCard key={i} {...pokemon} />)
         }
       </section>
