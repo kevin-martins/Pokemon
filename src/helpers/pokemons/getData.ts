@@ -1,4 +1,4 @@
-import { generationRange } from "../../api/select"
+import { generationRange } from "../../constants/select"
 import { GenerationRangeProps, NewPokemonDataProps, NewPokemonEvolutionProps } from "../../models/pokemon"
 import { EvolvesToProps } from "../../models/query-response/pokemon-evolution-chain/chain/evolves-to"
 
@@ -12,12 +12,12 @@ export const getEvolutionChainRecursively = (
 ) => {
     evolvesTo.forEach((e: EvolvesToProps) => {
         evolutions.push({
-            level: e.evolutionDetails[0].minLevel,
+            level: e.evolution_details[0].min_level,
             name: e.species.name,
             sprite: getPokemonSpriteUrlById(e.species.url.split('/')[6]),
             current: false,
         })
-        return getEvolutionChainRecursively(e.evolvesTo, evolutions)
+        return getEvolutionChainRecursively(e.evolves_to, evolutions)
     })
     return evolutions
 }

@@ -1,4 +1,4 @@
-import { generationRange } from "../../../src/api/select"
+import { generationRange } from "../../../src/constants/select"
 import { getPokemonEvolutionFormData, getCurrentPokemonEvolutionIndex, getEvolutionChainRecursively, getGenerationRangeByGenerationValue, getMissingLevelToEvolve, getNextPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonDataFormEvolutions, getPokemonDiscover, getPokemonIndexByIdentifier, getPokemonNames, getPokemonSpriteUrlById, updatePokemonEvolutionFormData } from "../../../src/helpers/pokemons/getData"
 import { ChainProps } from '../../../src/models/query-response/pokemon-evolution-chain/chain'
 
@@ -13,71 +13,71 @@ describe('getPokemonSpriteUrlById', () => {
 describe('getEvolutionChainRecursively', () => {
   
   const chain: ChainProps = {
-    evolutionDetails: [],
-    evolvesTo: [
+    evolution_details: [],
+    evolves_to: [
       {
-        evolutionDetails: [
+        evolution_details: [
           {
             gender: null,
-            heldItem: null,
+            held_item: null,
             item: null,
-            knownMove: null,
-            knownMoveType: null,
+            known_move: null,
+            known_move_type: null,
             location: null,
-            minAffection: null,
-            minBeauty: null,
-            minHappiness: null,
-            minLevel: 16,
-            needsOverworldRain: false,
-            partySpecies: null,
-            partyType: null,
-            relativePhysicalStats: null,
-            timeOfDay: "",
-            tradeSpecies: null,
+            min_affection: null,
+            min_beauty: null,
+            min_happiness: null,
+            min_level: 16,
+            needs_overworld_rain: false,
+            party_species: null,
+            party_type: null,
+            relative_physical_stats: null,
+            time_of_day: "",
+            trade_species: null,
             trigger: { name: "", url: "" },
-            turnUpsideDown: false,
+            turn_upside_down: false,
           }
         ],
-        evolvesTo: [
+        evolves_to: [
           {
-            evolutionDetails: [
+            evolution_details: [
               {
                 gender: null,
-                heldItem: null,
+                held_item: null,
                 item: null,
-                knownMove: null,
-                knownMoveType: null,
+                known_move: null,
+                known_move_type: null,
                 location: null,
-                minAffection: null,
-                minBeauty: null,
-                minHappiness: null,
-                minLevel: 32,
-                needsOverworldRain: false,
-                partySpecies: null,
-                partyType: null,
-                relativePhysicalStats: null,
-                timeOfDay: "",
-                tradeSpecies: null,
+                min_affection: null,
+                min_beauty: null,
+                min_happiness: null,
+                min_level: 32,
+                needs_overworld_rain: false,
+                party_species: null,
+                party_type: null,
+                relative_physical_stats: null,
+                time_of_day: "",
+                trade_species: null,
                 trigger: { name: "", url: "" },
-                turnUpsideDown: false,
+                turn_upside_down: false,
               }
             ],
-            evolvesTo: [],
-            isBaby: false,
+            evolves_to: [],
+            is_baby: false,
             species: {
               name: "venusaur",
               url: "https://pokeapi.co/api/v2/pokemon-species/3/",
             }
           }
         ],
-        isBaby: false,
+        is_baby: false,
         species: {
           name: "ivysaur",
           url: "https://pokeapi.co/api/v2/pokemon-species/2/",
         }
       }
     ],
-    isBaby: false,
+    is_baby: false,
     species: {
       name: "bulbasaur",
       url: "https://pokeapi.co/api/v2/pokemon-species/1/",
@@ -96,7 +96,7 @@ describe('getEvolutionChainRecursively', () => {
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: false, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getEvolutionChainRecursively(chain.evolvesTo, [evolution])
+    const result = getEvolutionChainRecursively(chain.evolves_to, [evolution])
 
     expect(result).toStrictEqual(validData)
   })
@@ -104,7 +104,7 @@ describe('getEvolutionChainRecursively', () => {
 
 describe('getCurrentPokemonEvolutionIndex', () => {
   // TODO: more explicit test names
-  it('should be true', () => {
+  it('should return true if the pokemon is the current evolution form', () => {
     const validData = [
       { level: 1, name: "bulbasaur", current: true, sprite: getPokemonSpriteUrlById(1) },
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
@@ -115,7 +115,7 @@ describe('getCurrentPokemonEvolutionIndex', () => {
     expect(result).toBe(0)
   })
 
-  it('should be true', () => {
+  it('should return true if the pokemon is the current evolution form', () => {
     const validData = [
       { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
       { level: 16, name: "ivysaur", current: true, sprite: getPokemonSpriteUrlById(2) },
@@ -271,7 +271,8 @@ describe('getPokemonDataFormEvolutions', () => {
       sprites: { default: "", shiny: "" },
       stats: [],
       types: [],
-    },{
+    },
+    {
       id: 0,
       name: "truc",
       names: [],

@@ -1,9 +1,13 @@
 import Center from './Center'
 import '../../styles/loading.css'
 
-const Loading = (): JSX.Element => {
+type Props = {
+  index: number
+}
+
+const Loading = ({ index }: Props): JSX.Element => {
   return (
-    <div className="relative grid place-items-center min-w-screen">
+    <div className="grid h-full place-items-center min-w-screen">
       <div className="pokeball pulse" />
     </div>
   )
