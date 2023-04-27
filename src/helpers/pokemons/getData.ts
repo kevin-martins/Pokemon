@@ -28,21 +28,10 @@ export const getCurrentPokemonEvolutionIndex = (
     return evolutions.findIndex(pkm => pkm.current)
 }
 
-export const getPokemonEvolutionFormData = (
+export const getCurrentPokemonEvolutionFormData = (
     evolutions: NewPokemonEvolutionProps[]
 ): NewPokemonEvolutionProps => {
     return evolutions[getCurrentPokemonEvolutionIndex(evolutions)]
-}
-
-export const getCurrentPokemonEvolutionForm = (
-    evolutions: NewPokemonEvolutionProps[]
-): string => {
-    for (const evolution of evolutions) {
-        if (evolution.current) {
-            return evolution.name
-        }
-    }
-    return ""
 }
 
 export const updatePokemonEvolutionFormData = (
@@ -63,6 +52,24 @@ export const updatePokemonEvolutionFormData = (
             }
         }
     })
+}
+
+export const getNextPokemonEvolutionFormDataByName = (
+    evolutions: NewPokemonEvolutionProps[],
+    pokemonName: string
+): NewPokemonEvolutionProps => {
+    const currentFormIndex = evolutions.findIndex(pkm => pkm.name === pokemonName)
+
+    if (currentFormIndex >= evolutions.length - 1) {
+        return {
+            ...evolutions[currentFormIndex],
+            current: true
+        }
+    }
+    return {
+        ...evolutions[currentFormIndex + 1],
+        current: true
+    }
 }
 
 export const getNextPokemonEvolutionFormData = (
