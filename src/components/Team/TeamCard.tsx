@@ -5,7 +5,7 @@ import { getCurrentPokemonEvolutionFormData, getMissingLevelToEvolve, getNextPok
 import { NewPokemonDataProps, NewPokemonEvolutionProps } from '../../models/pokemon'
 import { TeamState } from '../../models/team'
 import Button from '../shared/Button'
-import { plural } from '../../helpers/utils'
+import { changeWord } from '../../helpers/utils'
 import TeamCardMessage from './TeamCardMessage'
 import PokemonForm from './PokemonForm'
 
@@ -108,7 +108,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
           }
           {state === TeamState.Evolve && !canEvolve && !isLastForm
             && <TeamCardMessage message={`Level to evolve not reached, missing
-            ${missingLevelToEvolve} ${plural(missingLevelToEvolve > 1, "level", "levels")}
+            ${missingLevelToEvolve} ${changeWord(missingLevelToEvolve > 1, "level", "levels")}
             `}
             />
           }

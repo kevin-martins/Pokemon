@@ -6,10 +6,6 @@ export const getRandomValue = (max: number) => {
     return Math.floor(Math.random() * max);
 }
 
-export const getFile = (path: string, ext = "png"): string => {
-    return process.env.PUBLIC_URL + path + "." + ext
-}
-
-export const plural = (condition: boolean, singularWord: string, pluralWord: string): string => {
+export const changeWord = (condition: boolean, singularWord: string, pluralWord: string): string => {
     return condition ? pluralWord : singularWord
 }

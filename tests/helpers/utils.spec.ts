@@ -1,7 +1,7 @@
-import { capitalize, getRandomValue } from "../../src/helpers/utils";
+import { capitalize, changeWord, getRandomValue } from "../../src/helpers/utils";
 
 describe('Capitalize', () => {
-    it('should uppercase only the first caracter of the string given', () => {
+    it('should uppercase only the first caracter of the given string', () => {
         const testingValues = [
             { test: "slt", success: "Slt" },
             { test: "yop", success: "Yop" },
@@ -16,7 +16,7 @@ describe('Capitalize', () => {
 })
 
 describe('getRandomValue', () => {
-    it('should give a random number', () => {
+    it('should give a random number between range', () => {
         const maxValue = 5
         const testingValues = [
             getRandomValue(maxValue),
@@ -28,5 +28,15 @@ describe('getRandomValue', () => {
         testingValues.forEach(value => {
             expect(value).toBeLessThanOrEqual(5)
         })
+    })
+})
+
+describe('changeWord', () => {
+    it('should change the word because the condition is met', () => {
+        expect(changeWord(true, 'journal', 'journaux')).toEqual("journaux")
+    })
+
+    it('should not change the word because the condition is met', () => {
+        expect(changeWord(false, 'journal', 'journaux')).toEqual("journal")
     })
 })
