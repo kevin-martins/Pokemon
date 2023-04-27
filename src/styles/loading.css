@@ -3,9 +3,8 @@
     height: var(--pokeball-size);
     border-radius: var(--pokeball-size);
     border: solid 2px black;
-    position: absolute;
+    position: relative;
     background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%);
-    top: 50%;
 }
 
 .pokeball:before,

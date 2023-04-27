@@ -44,7 +44,6 @@ export const Home = () => {
         loader={status !== LoadingState.Idle &&
           <Loading
             key={progression}
-            index={progression}
           />}
       >
         <Pokedex />
