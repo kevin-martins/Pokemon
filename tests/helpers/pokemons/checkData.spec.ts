@@ -1,22 +1,22 @@
 import { isEvolutionFormAlreadyInArray, isPokemonAlreadyInArray } from "../../../src/helpers/pokemons/checkData";
 
 describe('isPokemonAlreadyInArray', () => {
-  const pokemonArray = [
+  const pokemonId = [
     { id: 1 },
     { id: 2 },
     { id: 3 },
   ]
   
-  it('should return true when PokemonID is not in the array', () => {
-    const result = isPokemonAlreadyInArray(pokemonArray, 5)
-
-    expect(result).toBe(true)
-  })
-  
-  it('should return false when PokemonID is in the array', () => {
-    const result = isPokemonAlreadyInArray(pokemonArray, 1)
+  it('should return false if PokemonID is not in in the array', () => {
+    const result = isPokemonAlreadyInArray(pokemonId, 5)
 
     expect(result).toBe(false)
+  })
+  
+  it('should return true when PokemonID is already the array', () => {
+    const result = isPokemonAlreadyInArray(pokemonId, 1)
+
+    expect(result).toBe(true)
   });
 })
 
