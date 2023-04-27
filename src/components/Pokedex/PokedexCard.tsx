@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToTeam, removeFromTeam } from '../../features/pokemon-slice'
-import { getCurrentPokemonEvolutionForm } from '../../helpers/pokemons/getData'
+
 import { getPokemonNames } from '../../helpers/pokemons/getData'
 import { capitalize } from '../../helpers/utils'
 import { NewPokemonDataProps } from '../../models/pokemon'
