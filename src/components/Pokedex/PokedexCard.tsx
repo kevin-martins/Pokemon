@@ -39,7 +39,7 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
       onMouseLeave={handleLeave}
     >
       {hover &&
-        <div className='absolute z-50 grid bg-gray-900/70 w-full h-full rounded-lg place-items-center'>
+        <div className='absolute z-30 grid bg-gray-900/70 w-full h-full rounded-lg place-items-center'>
           <div className='flex flex-col text-center w-44 m-auto gap-5'>
             {!pokemon.discovered
               ? <p className='text-white'>Pokemon not discovered</p>
