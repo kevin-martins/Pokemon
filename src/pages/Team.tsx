@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Button from '../components/shared/Button'
-import Center from '../components/shared/Center'
 import Title from '../components/shared/Title'
 import TeamCard from '../components/Team/TeamCard'
 import { emptyTeam } from '../features/pokemon-slice'
@@ -27,19 +26,17 @@ const Team = () => {
   }
 
   return (
-    <Center>
-      <>
-        <Title text="My Team" />
-        <section className='flex gap-2 mt-10 h-content'>
-          {team.length > 0 &&
+    <div className="grid h-full place-items-center">
+      <Title text="My Team" />
+      <section className='flex gap-2 mt-10 h-content'>
+        {team.length > 0 &&
+          <>
             <Button
               className='text-center w-44 px-3 py-2 bg-white mx-auto hover:bg-gray-400'
               onClick={handleEmptyTeam}
             >
               <p>Empty Your Team</p>
             </Button>
-          }
-          {team.length > 0 &&
             <Button
               className={`text-center w-44 px-3 py-2 mx-auto hover:bg-gray-400 ${
                 teamState === TeamState.Remove
@@ -51,8 +48,6 @@ const Team = () => {
             >
               <p>Remove Selection</p>
             </Button>
-          }
-          {team.length > 0 &&
             <Button
               className={`text-center w-44 px-3 py-2 mx-auto hover:bg-gray-400 ${
                 teamState === TeamState.Evolve
@@ -64,15 +59,15 @@ const Team = () => {
             >
               <p>Evolve Selection</p>
             </Button>
-          }
-        </section>
-        <section className='flex flex-row flex-wrap max-w-6xl gap-2 mt-10'>
-          {team.map((pokemon: NewPokemonDataProps, i: number) => (
-            <TeamCard key={i} pokemon={pokemon} state={teamState} />
-          ))}
-        </section>
-      </>
-    </Center>
+          </>
+        }
+      </section>
+      <section className='flex flex-row flex-wrap max-w-6xl gap-2 mt-10'>
+        {team.map((pokemon: NewPokemonDataProps, i: number) => (
+          <TeamCard key={i} pokemon={pokemon} state={teamState} />
+        ))}
+      </section>
+    </div>
   )
 }
 
