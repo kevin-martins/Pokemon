@@ -95,8 +95,6 @@ export const getPokemonNames = (
     return pokemonArray.map((pkm: { name: string }) => pkm.name)
 }
 
-
-// TODO: what is the point of this function?
 export const getPokemonDataFormEvolutions = <T extends string | number>(
     pokedex: NewPokemonDataProps[],
     identifier: T
@@ -128,18 +126,6 @@ export const getMissingLevelToEvolve = (
     currentLevel: number
 ): number => {
     return getNextPokemonEvolutionFormData(evolutions).level - currentLevel
-}
-
-// TODO: not used?
-export const getPokemonDiscover = (
-    evolutionNames: string[],
-    nextEvolutionName: string,
-    pokemonName: string,
-): boolean => {
-    const nextFormIndex = evolutionNames.findIndex(name => name === nextEvolutionName)
-    const currentFormIndex = evolutionNames.findIndex(name => name === pokemonName)
-
-    return currentFormIndex <= nextFormIndex
 }
 
 export const getGenerationRangeByGenerationValue = (value: string): GenerationRangeProps => {

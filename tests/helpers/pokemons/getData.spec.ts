@@ -1,5 +1,19 @@
 import { generationRange } from "../../../src/constants/select"
-import { getPokemonEvolutionFormData, getCurrentPokemonEvolutionIndex, getEvolutionChainRecursively, getGenerationRangeByGenerationValue, getMissingLevelToEvolve, getNextPokemonEvolutionFormData, getPokemonDataByIdentifier, getPokemonDataFormEvolutions, getPokemonDiscover, getPokemonIndexByIdentifier, getPokemonNames, getPokemonSpriteUrlById, updatePokemonEvolutionFormData } from "../../../src/helpers/pokemons/getData"
+import {
+  getCurrentPokemonEvolutionFormData,
+  getCurrentPokemonEvolutionIndex,
+  getEvolutionChainRecursively,
+  getGenerationRangeByGenerationValue,
+  getMissingLevelToEvolve,
+  getNextPokemonEvolutionFormData,
+  getNextPokemonEvolutionFormDataByName,
+  getPokemonDataByIdentifier,
+  getPokemonDataFormEvolutions,
+  getPokemonIndexByIdentifier,
+  getPokemonNames,
+  getPokemonSpriteUrlById,
+  updatePokemonEvolutionFormData
+} from "../../../src/helpers/pokemons/getData"
 import { ChainProps } from '../../../src/models/query-response/pokemon-evolution-chain/chain'
 
 describe('getPokemonSpriteUrlById', () => {
@@ -103,7 +117,6 @@ describe('getEvolutionChainRecursively', () => {
 })
 
 describe('getCurrentPokemonEvolutionIndex', () => {
-  // TODO: more explicit test names
   it('should return true if the pokemon is the current evolution form', () => {
     const validData = [
       { level: 1, name: "bulbasaur", current: true, sprite: getPokemonSpriteUrlById(1) },
@@ -127,7 +140,7 @@ describe('getCurrentPokemonEvolutionIndex', () => {
   })
 })
 
-describe('getPokemonEvolutionFormData', () => {
+describe('getCurrentPokemonEvolutionFormData', () => {
   it('should return the current pokemon evolution data', () => {
     const validData = { level: 1, name: "bulbasaur", current: true, sprite: getPokemonSpriteUrlById(1) }
     const pokemonEvolutionMock = [
@@ -135,7 +148,7 @@ describe('getPokemonEvolutionFormData', () => {
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: false, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getPokemonEvolutionFormData(pokemonEvolutionMock)
+    const result = getCurrentPokemonEvolutionFormData(pokemonEvolutionMock)
 
     expect(result).toStrictEqual(validData)
   })
@@ -147,7 +160,7 @@ describe('getPokemonEvolutionFormData', () => {
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getPokemonEvolutionFormData(pokemonEvolutionMock)
+    const result = getCurrentPokemonEvolutionFormData(pokemonEvolutionMock)
 
     expect(result).toStrictEqual(validData)
   })
@@ -171,6 +184,32 @@ describe('updatePokemonEvolutionFormData', () => {
   })
 })
 
+describe('getNextPokemonEvolutionFormDataByName', () => {
+  it('should return the next pokemon evolution data using the current pokemon name', () => {
+    const validData = { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
+    const pokemonEvolutionMock = [
+      { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
+      { level: 16, name: "ivysaur", current: true, sprite: getPokemonSpriteUrlById(2) },
+      { level: 32, name: "venusaur", current: false, sprite: getPokemonSpriteUrlById(3) }
+    ]
+    const result = getNextPokemonEvolutionFormDataByName(pokemonEvolutionMock, "ivysaur")
+
+    expect(result).toStrictEqual(validData)
+  })
+
+  it('should return the same pokemon evolution form data if it\'s already at the maximum evolution form', () => {
+    const validData = { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
+    const pokemonEvolutionMock = [
+      { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
+      { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
+      { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
+    ]
+    const result = getNextPokemonEvolutionFormDataByName(pokemonEvolutionMock, "venusaur")
+
+    expect(result).toStrictEqual(validData)
+  })
+})
+
 describe('getNextPokemonEvolutionFormData', () => {
   it('should return the next pokemon evolution data for: ivysaur', () => {
     const validData = { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
@@ -184,14 +223,14 @@ describe('getNextPokemonEvolutionFormData', () => {
     expect(result).toStrictEqual(validData)
   })
 
-  it('should return the same pokemon evolution form data if it\'s already the maximum evolution form', () => {
+  it('should return the same pokemon evolution form data if it\'s already at the maximum evolution form', () => {
     const validData = { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
     const pokemonEvolutionMock = [
       { level: 1, name: "bulbasaur", current: false, sprite: getPokemonSpriteUrlById(1) },
       { level: 16, name: "ivysaur", current: false, sprite: getPokemonSpriteUrlById(2) },
       { level: 32, name: "venusaur", current: true, sprite: getPokemonSpriteUrlById(3) }
     ]
-    const result = getPokemonEvolutionFormData(pokemonEvolutionMock)
+    const result = getCurrentPokemonEvolutionFormData(pokemonEvolutionMock)
 
     expect(result).toStrictEqual(validData)
   })
@@ -349,9 +388,6 @@ describe('getPokemonDataByIdentifier', () => {
   })
 })
 
-// TODO: ??
-getPokemonIndexByIdentifier
-
 describe('getPokemonIndexByIdentifier', () => {
   const validData = [
     {
@@ -416,26 +452,6 @@ describe('getMissingLevelToEvolve', () => {
 
       expect(result).toStrictEqual(32 - value)
     })
-  })
-})
-
-describe('getPokemonDiscoveres', () => {
-  it('should return true for all evolution form this pokemon\'s name have been pass through', () => {
-    const evolutionNames = ["bulbasaur", "ivysaur", "venusaur"]
-
-    evolutionNames.forEach(name => {
-      const result = getPokemonDiscover(evolutionNames, "venusaur", name)
-      
-      expect(result).toBe(true)
-    })
-
-  })
-
-  it('should return true for all evolution form this pokemon\'s name have been pass through', () => {
-    const evolutionNames = ["bulbasaur", "ivysaur", "venusaur"]
-    const result = getPokemonDiscover(evolutionNames, "ivysaur", "venusaur")
-
-    expect(result).toBe(false)
   })
 })
 
