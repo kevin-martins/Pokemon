@@ -1,16 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addToTeam, removeFromTeam } from '../../features/pokemon-slice'
-
 import { getPokemonNames } from '../../helpers/pokemons/getData'
 import { capitalize } from '../../helpers/utils'
 import { NewPokemonDataProps } from '../../models/pokemon'
 import Button from '../shared/Button'
 import Redirection from '../shared/Redirection'
 
-const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
+type Props = {
+  pokemon: NewPokemonDataProps,
+  onlyDiscovered: boolean
+}
+
+const PokedexCard = ({ pokemon, onlyDiscovered }: Props): JSX.Element => {
   const team = useAppSelector(state => state.pokemon.team)
-  const isInTeam = getPokemonNames(team).includes(pokemon.name)
+  const [isInTeam, setIsInTeam] = useState<boolean>(getPokemonNames(team).includes(pokemon.name))
   const [hover, setHover] = useState(false)
   const dispatch = useAppDispatch()
 
@@ -29,6 +33,10 @@ const PokedexCard = (pokemon: NewPokemonDataProps): JSX.Element => {
   const handleRemoveFromTeam = () => {
     dispatch(removeFromTeam(pokemon))
   }
+
+  useEffect(() => {
+    setIsInTeam(getPokemonNames(team).includes(pokemon.name))
+  }, [team, onlyDiscovered])
 
   return (
     <div

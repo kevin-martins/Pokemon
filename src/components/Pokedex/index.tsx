@@ -1,20 +1,27 @@
 import { generationOptions } from "../../constants/select"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { setGeneration, setOnlyDiscovered } from "../../features/pokemon-slice"
+import { setGeneration } from "../../features/pokemon-slice"
 import { getGenerationRangeByGenerationValue } from "../../helpers/pokemons/getData"
 import { NewPokemonDataProps } from "../../models/pokemon"
 import Checkbox from "../shared/Checkbox"
 import Select from "../shared/Select"
 import Title from "../shared/Title"
 import PokedexCard from "./PokedexCard"
+import { useState } from "react"
 
 const Pokedex = (): JSX.Element => {
   const pokedex = useAppSelector<NewPokemonDataProps[]>(state => state.pokemon.pokedex)
-  const onlyDiscovered = useAppSelector(state => state.pokemon.onlyDiscovered)
+  // const onlyDiscovered = useAppSelector(state => state.pokemon.onlyDiscovered)
+  const [onlyDiscovered, setOnlyDiscovered] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
   const handleUndiscovered = () => {
-    dispatch(setOnlyDiscovered(!onlyDiscovered))
+    // dispatch(setOnlyDiscovered(!onlyDiscovered))
+    if (onlyDiscovered) {
+      setOnlyDiscovered(false)
+    } else {
+      setOnlyDiscovered(true)
+    }
   }
 
   const handleGenerationFetch = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -42,7 +49,7 @@ const Pokedex = (): JSX.Element => {
       >
         {pokedex
           .filter((filter: NewPokemonDataProps) => onlyDiscovered === filter.discovered || !onlyDiscovered)
-          .map((pokemon, i: number) => <PokedexCard key={i} {...pokemon} />)
+          .map((pokemon, i: number) => <PokedexCard key={i} pokemon={pokemon} onlyDiscovered={onlyDiscovered} />)
         }
       </section>
     </div>

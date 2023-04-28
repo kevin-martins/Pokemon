@@ -22,10 +22,6 @@ const PokemonForm = ({
   currentEvolution,
   nextEvolution
 }: Props) => {
-  // const [currentForm, setCurrentForm] = useState<NewPokemonEvolutionProps>(getCurrentPokemonEvolutionFormData(pokemon.evolutions))
-  // const [nextForm, setNextForm] = useState<NewPokemonEvolutionProps>(getNextPokemonEvolutionFormData(pokemon.evolutions))
-  const [loading, setLoading] = useState<boolean>(false)
-
   return (
     <>
       <section className='absolute w-full left-1/2 -translate-x-1/2 translate-y-1/2 text-white flex flex-row'>

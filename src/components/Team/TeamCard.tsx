@@ -104,7 +104,7 @@ const TeamCard = ({ pokemon, state }: Props) => {
             && <TeamCardMessage message="Click to remove" />
           }
           {!hover && state === TeamState.Evolve && canEvolve && !isLastForm
-            && <TeamCardMessage message="Evolvable" />
+            && <TeamCardMessage message="Click to evolve" />
           }
           {state === TeamState.Evolve && !canEvolve && !isLastForm
             && <TeamCardMessage message={`Level to evolve not reached, missing
