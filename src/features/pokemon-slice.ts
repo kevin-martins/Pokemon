@@ -22,34 +22,6 @@ import { PokemonMovesResponseProps } from '../models/query-response/pokemon-move
 import { PokemonSpeciesResponseProps } from '../models/query-response/pokemon-species';
 import { fetchPokemonDataByUrl, fetchPokemonInfoById } from './pokemon/pokemonAPI';
 
-const initialGeneration: GenerationRangeProps = {
-    value: "I",
-    from: 1,
-    to: 151,
-}
-
-export interface PokemonState {
-    status: LoadingState,
-    pokedex: NewPokemonDataProps[],
-    team: NewPokemonDataProps[],
-    generationRange: GenerationRangeProps,
-    alerts: AlertProps[],
-    computerTeam: NewPokemonDataProps[],
-    evolutionList: [],
-    onlyDiscovered: boolean,
-}
-
-const initialState: PokemonState = {
-    status: LoadingState.Idle,
-    pokedex: [],
-    team : [],
-    generationRange: initialGeneration,
-    alerts: [],
-    computerTeam: [],
-    evolutionList: [],
-    onlyDiscovered: true,
-}
-
 const getPokemonMoves = async (moves: MovesProps[]): Promise<NewPokemonMovesProps[]> => {
     return Promise.all(
         moves.map(async (move: MovesProps) => {
@@ -81,8 +53,6 @@ const makeAllApiRequests = async (pokemonId: number) => {
 
     return { pokemonInfoResponse, pokemonSpeciesResponse, evolutions }
 }
-
-
 
 const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonDataProps> => {
     const {
@@ -148,6 +118,32 @@ export const fetchDataAsync = createAsyncThunk(
       return newPokemonData
     }
 )
+
+const initialGeneration: GenerationRangeProps = {
+    value: "I",
+    from: 1,
+    to: 151,
+}
+
+export interface PokemonState {
+    status: LoadingState,
+    pokedex: NewPokemonDataProps[],
+    team: NewPokemonDataProps[],
+    generationRange: GenerationRangeProps,
+    alerts: AlertProps[],
+    computerTeam: NewPokemonDataProps[],
+    evolutionList: [],
+}
+
+const initialState: PokemonState = {
+    status: LoadingState.Idle,
+    pokedex: [],
+    team : [],
+    generationRange: initialGeneration,
+    alerts: [],
+    computerTeam: [],
+    evolutionList: [],
+}
 
 const apiSlice = createSlice({
     name: 'pokemon',
@@ -284,9 +280,6 @@ const apiSlice = createSlice({
                 })
             })
             state.team = []
-        },
-        setOnlyDiscovered(state, action: PayloadAction<boolean>) {
-            state.onlyDiscovered = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -316,7 +309,6 @@ export const {
     removeFromTeam,
     evolvesPokemon,
     emptyTeam,
-    setOnlyDiscovered,
 } = apiSlice.actions
 
 export default apiSlice.reducer

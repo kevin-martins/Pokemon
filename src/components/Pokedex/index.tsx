@@ -11,12 +11,10 @@ import { useState } from "react"
 
 const Pokedex = (): JSX.Element => {
   const pokedex = useAppSelector<NewPokemonDataProps[]>(state => state.pokemon.pokedex)
-  // const onlyDiscovered = useAppSelector(state => state.pokemon.onlyDiscovered)
   const [onlyDiscovered, setOnlyDiscovered] = useState<boolean>(true)
   const dispatch = useAppDispatch()
 
   const handleUndiscovered = () => {
-    // dispatch(setOnlyDiscovered(!onlyDiscovered))
     if (onlyDiscovered) {
       setOnlyDiscovered(false)
     } else {
