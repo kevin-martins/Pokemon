@@ -11,7 +11,7 @@ import { useState } from "react"
 
 const Pokedex = (): JSX.Element => {
   const pokedex = useAppSelector<NewPokemonDataProps[]>(state => state.pokemon.pokedex)
-  const [onlyDiscovered, setOnlyDiscovered] = useState<boolean>(true)
+  const [onlyDiscovered, setOnlyDiscovered] = useState<boolean>(false)
   const dispatch = useAppDispatch()
 
   const handleUndiscovered = () => {
@@ -36,7 +36,7 @@ const Pokedex = (): JSX.Element => {
           onChange={handleGenerationFetch}
         />
         <Checkbox
-          text="only discovered pokemons"
+          text="discovered pokemons"
           value={onlyDiscovered}
           className="text-white text-center"
           onChange={handleUndiscovered}

@@ -43,10 +43,10 @@ const PokemonForm = ({
               className={`w-60 h-60 m-auto grayscale`}
             />
           : <img
-            src={currentEvolution.sprite}
-            alt={currentEvolution.name}
-            className='w-60 h-60 m-auto'
-          />
+              src={currentEvolution.sprite}
+              alt={currentEvolution.name}
+              className='w-60 h-60 m-auto'
+            />
         }
       </div>
     </>

@@ -17,9 +17,9 @@ export const Home = () => {
     if (status === LoadingState.Idle && generationRange.value === generation) {
       const pas = 19
       const from = generationRange.from + (pas * progression)
-      const to = from + pas - 1
-      if (to > generationRange.to) {
-        dispatch(fetchDataAsync({ from: from, to: generationRange.to }))
+      const to = from + pas
+      if (to >= generationRange.to) {
+        dispatch(fetchDataAsync({ from: from, to: generationRange.to + 1 }))
       } else {
         dispatch(fetchDataAsync({ from: from, to: to }))
       }

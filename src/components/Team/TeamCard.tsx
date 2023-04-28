@@ -71,6 +71,8 @@ const TeamCard = ({ pokemon, state }: Props) => {
     }
   }, [canEvolve])
 
+  console.log(pokemon)
+
   return (
     <div className='flex flex-col'>
       <div
@@ -108,8 +110,8 @@ const TeamCard = ({ pokemon, state }: Props) => {
           }
           {state === TeamState.Evolve && !canEvolve && !isLastForm
             && <TeamCardMessage message={`Level to evolve not reached, missing
-            ${missingLevelToEvolve} ${changeWord(missingLevelToEvolve > 1, "level", "levels")}
-            `}
+                  ${missingLevelToEvolve} ${changeWord(missingLevelToEvolve > 1, "level", "levels")}
+                `}
             />
           }
           {state === TeamState.Evolve && isLastForm && !canEvolve
