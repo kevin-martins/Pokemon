@@ -71,8 +71,6 @@ const TeamCard = ({ pokemon, state }: Props) => {
     }
   }, [canEvolve])
 
-  console.log(pokemon)
-
   return (
     <div className='flex flex-col'>
       <div

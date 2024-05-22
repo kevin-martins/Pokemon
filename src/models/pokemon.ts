@@ -48,6 +48,7 @@ export type NewPokemonDataProps = {
     toNextLevel: number,
     captureRate: number,
     evolutions: NewPokemonEvolutionProps[],
+    hasEvolved: boolean,
     isLegendary: boolean,
     isMythical: boolean,
     moves: NewPokemonMovesProps[],

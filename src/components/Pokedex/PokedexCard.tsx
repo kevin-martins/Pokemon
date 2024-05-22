@@ -5,7 +5,6 @@ import { getPokemonNames } from '../../helpers/pokemons/getData'
 import { capitalize } from '../../helpers/utils'
 import { NewPokemonDataProps } from '../../models/pokemon'
 import Button from '../shared/Button'
-import Redirection from '../shared/Redirection'
 
 type Props = {
   pokemon: NewPokemonDataProps,
@@ -51,7 +50,9 @@ const PokedexCard = ({ pokemon, onlyDiscovered }: Props): JSX.Element => {
           <div className='flex flex-col text-center w-44 m-auto gap-5'>
             {!pokemon.discovered
               ? <p className='text-white'>Pokemon not discovered</p>
-              : <>
+              : pokemon.hasEvolved
+                ? <p className='text-white'>Pokemon has been evolved</p>
+                : <>
                   {isInTeam ? 
                     <Button
                       className='w-full text-center px-3 py-2 bg-white mx-auto hover:bg-gray-400'

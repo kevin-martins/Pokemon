@@ -74,6 +74,7 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
         evolutions: [
             ...evolutions,
         ],
+        hasEvolved: false,
         isLegendary: pokemonSpeciesResponse.is_legendary,
         isMythical: pokemonSpeciesResponse.is_mythical,
         moves: [],
@@ -84,25 +85,6 @@ const organiseDataAfterResponse = async (pokemonId: number): Promise<NewPokemonD
         },
         stats: [ ...pokemonInfoResponse.stats ],
         types: [ ...pokemonInfoResponse.types ],
-        // id: pokemonInfoResponse.id,
-        // name: pokemonInfoResponse.name,
-        // names: [],
-        // discovered: true,
-        // currentLevel: 1,
-        // currentXp: 0,
-        // toNextLevel: pokemonInfoResponse.base_experience,
-        // captureRate: 1,
-        // evolutions: [],
-        // isLegendary: true,
-        // isMythical: true,
-        // moves: [],
-        // currentMoves: [],
-        // sprites: {
-        //     default: pokemonInfoResponse.sprites.other.home.front_default,
-        //     shiny: pokemonInfoResponse.sprites.other.home.front_shiny,
-        // },
-        // stats: [ ...pokemonInfoResponse.stats ],
-        // types: [ ...pokemonInfoResponse.types ],
     }
 }
 
@@ -221,15 +203,22 @@ const apiSlice = createSlice({
             }
         },
         evolvesPokemon(state, action: PayloadAction<NewPokemonDataProps>) {
+            console.log(action.payload)
+            const pokemonIndex = getPokemonIndexByIdentifier(state.pokedex, action.payload.id)
             const teamIndex = getPokemonIndexByIdentifier(state.team, action.payload.id)
             const nextEvolutionFormData = getNextPokemonEvolutionFormData(action.payload.evolutions)
             const nextPokemonIndex = getPokemonIndexByIdentifier(state.pokedex, nextEvolutionFormData.name)
 
             if (nextEvolutionFormData.name !== action.payload.name) {
+                state.pokedex[pokemonIndex] = {
+                    ...state.pokedex[pokemonIndex],
+                    hasEvolved: true
+                }
                 state.pokedex[nextPokemonIndex] = {
                     ...state.pokedex[nextPokemonIndex],
                     discovered: true,
                     evolutions: updatePokemonEvolutionFormData(action.payload.evolutions),
+                    currentLevel: action.payload.currentLevel
                 }
                 state.team[teamIndex] = {
                     ...state.pokedex[nextPokemonIndex],
@@ -289,7 +278,6 @@ const apiSlice = createSlice({
             })
             .addCase(fetchDataAsync.fulfilled, (state, action) => {
                 state.status = LoadingState.Idle
-                console.log("call")
                 action.payload.forEach(pkm => {
                     state.pokedex.push(pkm)
                 })
